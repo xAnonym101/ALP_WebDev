@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +16,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [ProductController::class, 'productsList'])->middleware('auth')->name('homepage');
+Route::get('/createCategory', [CategoryController::class, 'create'])->middleware('auth')->name('createCategory');
+Route::post('/storeCategory', [CategoryController::class, 'store'])->middleware('auth')->name('storeCategory');
+
+Route::get('/createProduct', [ProductController::class, 'create'])->middleware('auth')->name('createProduct');
+Route::post('/storeProduct', [ProductController::class, 'store'])->middleware('auth')->name('storeProduct');
+Route::get('/updateProduct/{id}', [ProductController::class, 'edit'])->middleware('auth')->name('updateProduct');
+Route::put('/saveUpdate/{id}', [ProductController::class, 'update'])->middleware('auth')->name('saveUpdate');
+Route::delete('/deleteProduct/{id}', [ProductController::class, 'destroy'])->middleware('auth')->name('deleteProduct');
+
+Auth::routes();
+
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+

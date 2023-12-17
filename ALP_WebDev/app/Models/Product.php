@@ -18,6 +18,7 @@ class Product extends Model
         'price',
         'discount_percent',
         'final_price',
+        'category_id',
 
     ];
 
@@ -35,7 +36,7 @@ class Product extends Model
 
     public function FinalPrice()
     {
-        $this->final_price = $this->price - ($this->price * ($this->discount / 100));
+        $this->final_price = $this->price - ($this->price * ($this->discount_percent / 100));
     }
 
     public function variant()

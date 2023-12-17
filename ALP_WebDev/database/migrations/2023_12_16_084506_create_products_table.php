@@ -15,11 +15,11 @@ return new class extends Migration
 
             $table->id('product_id');
             $table->string('product_name');
-            $table->string('decription');
-            $table->string('best_seller');
+            $table->string('description');
+            $table->string('best_seller')->nullable();
             $table->integer('price');
-            $table->string('discount_percent');
-            $table->string('final_price');
+            $table->string('discount_percent')->nullable();
+            $table->string('final_price')->nullable();
             $table->timestamps();
 
             $table->unsignedBigInteger('category_id');
