@@ -2,8 +2,8 @@
 
 @section('content1')
     <div class="container mt-5">
-        <form action="{{route('storeProduct')}}" method="POST">
-        {{-- <form action="#" method="POST"> --}}
+        <form action="{{ route('storeProduct') }}" method="POST">
+            {{-- <form action="#" method="POST"> --}}
             @csrf
             <div class="mb-3">
                 <label for="product_name" class="form-label">Product name</label>
@@ -52,6 +52,17 @@
                 <!-- Dynamic forms will be added here -->
             </div>
 
+            <script>
+                // Run addDynamicForm for each variant in $variants
+                const variantsData = @json($variants ?? []);
+
+                document.addEventListener('DOMContentLoaded', function () {
+                    variantsData.forEach(function (variant) {
+                        addDynamicForm(variant);
+                    });
+                });
+            </script>
+
             <button type="button" onclick="addDynamicForm()">Add Another Form</button>
 
             <button type="submit" class="btn btn-primary">Submit</button>
@@ -95,7 +106,6 @@
             document.getElementById(`variant_name${formCounter}`).value = variantData[formCounter - 1].variant_name;
             document.getElementById(`color${formCounter}`).value = variantData[formCounter - 1].color;
             document.getElementById(`description${formCounter}`).value = variantData[formCounter - 1].description;
-            // Set more fields as needed
         }
 
         document.getElementById('formCounter').value = formCounter;
@@ -106,6 +116,7 @@
         dynamicForm.remove();
     }
 </script>
+
 
 
 {{-- @extends('layouts.app')
