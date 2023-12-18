@@ -112,15 +112,40 @@ class ProductController extends Controller
         //     'best_seller' => $request->input('best_seller'),
         // ]);
 
-        DB::table('products')->where('product_id', $id)->update([
-            'product_name' => $request->input('product_name'),
-            'description' => $request->input('description'),
-            'price' => $request->input('price'),
-            'category_id' => $request->input('category_id'),
-            'discount_percent' => $request->input('discount_percent'),
-            'best_seller' => $request->input('best_seller'),
-            'final_price' => $request->price - ($request->price * ($request->discount_percent / 100)),
-        ]);
+        // DB::table('products')->where('product_id', $id)->update([
+        //     'product_name' => $request->input('product_name'),
+        //     'description' => $request->input('description'),
+        //     'price' => $request->input('price'),
+        //     'category_id' => $request->input('category_id'),
+        //     'discount_percent' => $request->input('discount_percent'),
+        //     'best_seller' => $request->input('best_seller'),
+        //     'final_price' => $request->price - ($request->price * ($request->discount_percent / 100)),
+        // ]);
+
+        for ($i = 1; $i <= $request->input('formCounter')+1; $i++) {
+            $variantName = $request->input("variant_name{$i}");
+            $color = $request->input("color{$i}");
+            $description = $request->input("description{$i}");
+            // Check if any of the fields is null, and skip adding the variant
+            if ($variantName !== null || $color !== null || $description !== null) {
+                if ($request->filled("variant_id{$i}")) {
+                    $variant = DB::table('variants')->where('variant_id', $request->input("variant_id{$i}"))->update([
+                        'variant_name' => $variantName,
+                        'color' => $color,
+                        'description' => $description,
+                    ]);
+                } else {
+                    DB::table('variants')->insert([
+                        'variant_name' => $variantName,
+                        'color' => $color,
+                        'description' => $description,
+                        'product_id' => $id
+                    ]);
+                }
+            }
+        }
+
+        // dd($request->all());
         return redirect()->route('homepage');
     }
 

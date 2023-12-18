@@ -60,8 +60,6 @@
                     </td> --}}
                     <td scope="col">
                         <a href={{route('updateProduct', $data->product_id)}} class="btn btn-primary">Update</a>
-                        <a href=# class="btn btn-secondary">Add Variants</a>
-                        <a href=# class="btn btn-secondary">Add Images</a>
 
                         <form action="{{route('deleteProduct', $data->product_id)}}" method="POST" style="display: inline;">
                             @csrf

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\VariantController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,8 @@ Route::post('/storeProduct', [ProductController::class, 'store'])->middleware('a
 Route::get('/updateProduct/{id}', [ProductController::class, 'edit'])->middleware('auth')->name('updateProduct');
 Route::put('/saveUpdate/{id}', [ProductController::class, 'update'])->middleware('auth')->name('saveUpdate');
 Route::delete('/deleteProduct/{id}', [ProductController::class, 'destroy'])->middleware('auth')->name('deleteProduct');
+
+Route::delete('/deleteVariant/{id}', [VariantController::class, 'destroy'])->middleware('auth')->name('deleteVariant');
 
 Auth::routes();
 

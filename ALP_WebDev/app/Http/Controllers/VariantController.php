@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Variant;
 use App\Http\Requests\StoreVariantRequest;
 use App\Http\Requests\UpdateVariantRequest;
+use Illuminate\Support\Facades\DB;
 
-class VariantsController extends Controller
+class VariantController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -59,8 +60,10 @@ class VariantsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Variant $variant)
+    public function destroy($id)
     {
-        //
+        dd($id);
+        DB::table('variants')->where('variant_id', $id)->delete();
+        return redirect()->back();
     }
 }

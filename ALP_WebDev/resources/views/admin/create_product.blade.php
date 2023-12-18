@@ -73,16 +73,6 @@
         `;
 
         document.getElementById('dynamicFormsContainer').appendChild(dynamicForm);
-
-        // Set values from $variants if available
-        const variantData = @json($variants ?? null);
-        if (variantData) {
-            document.getElementById(`variant_name${formCounter}`).value = variantData[formCounter - 1].variant_name;
-            document.getElementById(`color${formCounter}`).value = variantData[formCounter - 1].color;
-            document.getElementById(`description${formCounter}`).value = variantData[formCounter - 1].description;
-            // Set more fields as needed
-        }
-
         document.getElementById('formCounter').value = formCounter;
     }
 
