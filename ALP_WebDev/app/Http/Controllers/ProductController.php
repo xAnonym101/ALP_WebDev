@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Variant;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use Illuminate\Http\Request;
@@ -36,35 +37,43 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        // $product = Product::create([
-        Product::create([
+        $product = Product::create([
+            // Product::create([
             'product_name' => $request->product_name,
             'description' => $request->description,
             'price' => $request->price,
             'category_id' => $request->category_id,
-            'discount_percent' => 0,
+            'discount_percent' => $request->discount_percent,
             'best_seller' => '0',
+            'final_price' => $request->price - ($request->price * ($request->discount_percent / 100)),
         ]);
+        // dd($request->input('formCounter'));
 
-        // $variantsData = $request->input('variants');
+        // Create an array to store variants
 
-        // if ($variantsData) {
-        //     // Create an array to store variants
-        //     $variants = [];
+        $variants = [];
 
-        //     // Loop through each variant data
-        //     foreach ($variantsData as $variantData) {
-        //         // Add the variant data to the array
-        //         $variants[] = [
-        //             'variant_name' => $variantData['variant_name'],
-        //             'color' => $variantData['color'],
-        //             'description' => $variantData['description'],
-        //             // Add other fields as needed
-        //         ];
-        //     }
+        // Loop through each variant data
+        for ($i = 1; $i <= $request->input('formCounter'); $i++) {
+            $variantName = $request->input("variant_name{$i}");
+            $color = $request->input("color{$i}");
+            $description = $request->input("description{$i}");
 
-        //     $product->variant()->createMany($variants);
-        // }
+            // Check if any of the fields is null, and skip adding the variant
+            if ($variantName !== null || $color !== null || $description !== null) {
+                $variants[] = [
+                    'variant_name' => $variantName,
+                    'color' => $color,
+                    'description' => $description,
+                    // Add more fields as needed
+                ];
+            }
+        }
+
+        // dd($variants);
+
+
+        $product->variants()->createMany($variants);
 
         return redirect()->route('homepage');
     }
@@ -84,13 +93,15 @@ class ProductController extends Controller
     {
         $categories = DB::table('categories')->get();
         $toEdit = Product::where('product_id', $id)->first();
-        return view('admin.update_product', compact('categories', 'toEdit'));
+        $variants = Variant::where('product_id', $id)->get();
+        return view('admin.update_product', compact('categories', 'toEdit', 'variants'));
     }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, $id)
+    // public function update(Request $request, Product $product)
     {
         // $product->update([
         //     'product_name' => $request->input('product_name'),

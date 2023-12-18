@@ -22,29 +22,29 @@ class Product extends Model
 
     ];
 
-    protected static function boot()
-    {
-        parent::boot();
+    // protected static function boot()
+    // {
+    //     parent::boot();
 
-        static::creating(function ($model) {
-            $model->FinalPrice();
-        });
-        static::updating(function ($model) {
-            $model->FinalPrice();
-        });
-    }
+    //     static::creating(function ($model) {
+    //         $model->FinalPrice();
+    //     });
+    //     static::updating(function ($model) {
+    //         $model->FinalPrice();
+    //     });
+    // }
 
-    public function FinalPrice()
-    {
-        $this->final_price = $this->price - ($this->price * ($this->discount_percent / 100));
-    }
+    // public function FinalPrice()
+    // {
+    //     $this->final_price = $this->price - ($this->price * ($this->discount_percent / 100));
+    // }
 
-    public function variant()
+    public function variants()
     {
         return $this->hasMany(Variant::class);
     }
 
-    public function image()
+    public function images()
     {
         return $this->hasMany(Image::class);
     }

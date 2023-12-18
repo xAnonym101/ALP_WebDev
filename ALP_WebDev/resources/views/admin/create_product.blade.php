@@ -18,6 +18,10 @@
                 <input type="text" class="form-control" id="price" name="price" placeholder="price" Required>
             </div>
             <div class="mb-3">
+                <label for="discount_percent" class="form-label">Discount</label>
+                <input type="text" class="form-control" id="discount_percent" name="discount_percent" placeholder="discount_percent" Required>
+            </div>
+            <div class="mb-3">
                 <label for="category_id" class="form-label">Category</label>
                 <select name="category_id" id="category_id" Required>
                     @foreach ($categories as $option)
@@ -26,26 +30,30 @@
                 </select>
             </div>
 
-            {{-- <div id="dynamicFormsContainer">
+            <input type="hidden" id="formCounter" name="formCounter" value="0">
+
+
+            <div id="dynamicFormsContainer">
                 <!-- Dynamic forms will be added here -->
             </div>
 
-            <button type="button" onclick="addDynamicForm()">Add Another Form</button> --}}
+            <button type="button" onclick="addDynamicForm()">Add Another Form</button>
 
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
 @endsection
 
-{{-- <script>
+<script>
     let formCounter = 0;
 
     function addDynamicForm() {
         formCounter++;
 
         const dynamicForm = document.createElement('div');
+        dynamicForm.classList.add('mb-3');
+        dynamicForm.id = `variant_form_${formCounter}`;
         dynamicForm.innerHTML = `
-
             <h3 for="field_${formCounter}">Variant ${formCounter}</h3>
 
             <!-- New form fields -->
@@ -57,35 +65,30 @@
 
             <label for="description${formCounter}">Description </label>
             <input type="text" id="description${formCounter}" name="description${formCounter}" required>
+
+            <button type="button" onclick="removeDynamicForm(${formCounter})">Remove</button>
             <!-- You can add more fields as needed -->
 
-            // <hr> <!-- Optional: Add a separator between forms -->
+            <hr> <!-- Optional: Add a separator between forms -->
         `;
 
         document.getElementById('dynamicFormsContainer').appendChild(dynamicForm);
-    }
 
-    function submitForm() {
-        const mainForm = document.getElementById('mainForm');
-
-        // Gather the dynamically added form data
-        const dynamicFormData = [];
-        for (let i = 1; i <= formCounter; i++) {
-            dynamicFormData.push({
-                variant_name: document.getElementById(`variant_name${i}`).value,
-                color: document.getElementById(`color${i}`).value,
-                description: document.getElementById(`description${i}`).value,
-            });
+        // Set values from $variants if available
+        const variantData = @json($variants ?? null);
+        if (variantData) {
+            document.getElementById(`variant_name${formCounter}`).value = variantData[formCounter - 1].variant_name;
+            document.getElementById(`color${formCounter}`).value = variantData[formCounter - 1].color;
+            document.getElementById(`description${formCounter}`).value = variantData[formCounter - 1].description;
+            // Set more fields as needed
         }
 
-        // Append the dynamic form data to the main form
-        const dynamicInput = document.createElement('input');
-        dynamicInput.type = 'hidden';
-        dynamicInput.name = 'variants';
-        dynamicInput.value = JSON.stringify(dynamicFormData);
-        mainForm.appendChild(dynamicInput);
-
-        // Submit the form
-        mainForm.submit();
+        document.getElementById('formCounter').value = formCounter;
     }
-</script> --}}
+
+    function removeDynamicForm(formNumber) {
+        const dynamicForm = document.getElementById(`variant_form_${formNumber}`);
+        dynamicForm.remove();
+    }
+</script>
+
