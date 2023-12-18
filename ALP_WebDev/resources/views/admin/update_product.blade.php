@@ -66,6 +66,11 @@
 
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+
+        @foreach ($images as $item)
+            <img src="{{ asset('storage/images/'.$item->image) }}
+            ">
+        @endforeach
     </div>
 @endsection
 

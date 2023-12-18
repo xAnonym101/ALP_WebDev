@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Variant;
+use App\Models\Image;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use Illuminate\Http\Request;
@@ -37,6 +38,10 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+
+        // dd($request->file('image'));
+
+
         $product = Product::create([
             // Product::create([
             'product_name' => $request->product_name,
@@ -47,33 +52,37 @@ class ProductController extends Controller
             'best_seller' => '0',
             'final_price' => $request->price - ($request->price * ($request->discount_percent / 100)),
         ]);
-        // dd($request->input('formCounter'));
 
-        // Create an array to store variants
+        $images = [];
+        $imageFile = $request->file('image');
+        $hashedFilename = $imageFile->hashName();
+
+        if ($request->file('image')) {
+            // dd($request->file('image'));
+            $imageFile->storeAs('images', $hashedFilename, 'public');
+            $images[] = [
+                'image' => $hashedFilename,
+            ];
+        }
 
         $variants = [];
 
-        // Loop through each variant data
         for ($i = 1; $i <= $request->input('formCounter'); $i++) {
             $variantName = $request->input("variant_name{$i}");
             $color = $request->input("color{$i}");
             $description = $request->input("description{$i}");
-
-            // Check if any of the fields is null, and skip adding the variant
             if ($variantName !== null || $color !== null || $description !== null) {
                 $variants[] = [
                     'variant_name' => $variantName,
                     'color' => $color,
                     'description' => $description,
-                    // Add more fields as needed
                 ];
             }
         }
 
-        // dd($variants);
-
-
         $product->variants()->createMany($variants);
+        // dd($images);
+        $product->images()->createMany($images);
 
         return redirect()->route('homepage');
     }
@@ -94,7 +103,8 @@ class ProductController extends Controller
         $categories = DB::table('categories')->get();
         $toEdit = Product::where('product_id', $id)->first();
         $variants = Variant::where('product_id', $id)->get();
-        return view('admin.update_product', compact('categories', 'toEdit', 'variants'));
+        $images = Image::where('product_id', $id)->get();
+        return view('admin.update_product', compact('categories', 'toEdit', 'variants', 'images'));
     }
 
     /**
@@ -112,15 +122,15 @@ class ProductController extends Controller
         //     'best_seller' => $request->input('best_seller'),
         // ]);
 
-        // DB::table('products')->where('product_id', $id)->update([
-        //     'product_name' => $request->input('product_name'),
-        //     'description' => $request->input('description'),
-        //     'price' => $request->input('price'),
-        //     'category_id' => $request->input('category_id'),
-        //     'discount_percent' => $request->input('discount_percent'),
-        //     'best_seller' => $request->input('best_seller'),
-        //     'final_price' => $request->price - ($request->price * ($request->discount_percent / 100)),
-        // ]);
+        DB::table('products')->where('product_id', $id)->update([
+            'product_name' => $request->input('product_name'),
+            'description' => $request->input('description'),
+            'price' => $request->input('price'),
+            'category_id' => $request->input('category_id'),
+            'discount_percent' => $request->input('discount_percent'),
+            'best_seller' => $request->input('best_seller'),
+            'final_price' => $request->price - ($request->price * ($request->discount_percent / 100)),
+        ]);
 
         for ($i = 1; $i <= $request->input('formCounter')+1; $i++) {
             $variantName = $request->input("variant_name{$i}");

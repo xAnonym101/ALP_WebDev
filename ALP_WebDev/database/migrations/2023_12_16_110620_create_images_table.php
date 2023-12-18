@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('images', function (Blueprint $table) {
             $table->id('image_id');
-            $table->binary('image');
+            $table->string('image');
             $table->timestamps();
 
             $table->unsignedBigInteger('product_id');

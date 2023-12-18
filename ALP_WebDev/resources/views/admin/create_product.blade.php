@@ -2,7 +2,7 @@
 
 @section('content1')
     <div class="container mt-5">
-        <form action="{{route('storeProduct')}}" method="POST">
+        <form action="{{route('storeProduct')}}" method="POST" enctype="multipart/form-data">
         {{-- <form action="#" method="POST"> --}}
             @csrf
             <div class="mb-3">
@@ -20,6 +20,12 @@
             <div class="mb-3">
                 <label for="discount_percent" class="form-label">Discount</label>
                 <input type="text" class="form-control" id="discount_percent" name="discount_percent" placeholder="discount_percent" Required>
+            </div>
+            <div class="mb-3">
+                <label for="image" class="form-label">Image</label>
+                <img class="img-preview img-fluid mb-3 col-sm-5">
+                <input class="form-control" type="file" id="image" name="image"
+                    accept="image/jpg, image/png, image/jpeg" onchange="previewImage()">
             </div>
             <div class="mb-3">
                 <label for="category_id" class="form-label">Category</label>
@@ -79,6 +85,20 @@
     function removeDynamicForm(formNumber) {
         const dynamicForm = document.getElementById(`variant_form_${formNumber}`);
         dynamicForm.remove();
+    }
+
+    function previewImage(){
+        const image = document.querySelector('#image');
+        const imgPreview = document.querySelector('.img-preview');
+
+        imgPreview.style.display = 'block';
+
+        const ofReader = new FileReader();
+        ofReader.readAsDataURL(image.files[0]);
+
+        ofReader.onload = function (oFREvent){
+            imgPreview.src = oFREvent.target.result;
+        }
     }
 </script>
 
