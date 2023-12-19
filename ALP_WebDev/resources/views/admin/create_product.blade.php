@@ -22,7 +22,7 @@
                 <input type="text" class="form-control" id="discount_percent" name="discount_percent" placeholder="discount_percent" Required>
             </div>
             <div class="mb-3">
-                <label for="image" class="form-label">Image</label>
+                <label for="image" class="form-label">Image Upload</label>
                 <img class="img-preview img-fluid mb-3 col-sm-5">
                 <input class="form-control" type="file" id="image" name="image"
                     accept="image/jpg, image/png, image/jpeg" onchange="previewImage()">

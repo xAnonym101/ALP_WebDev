@@ -2,8 +2,7 @@
 
 @section('content1')
     <div class="container mt-5">
-        <form action="{{ route('saveUpdate', $toEdit->product_id) }}" method="POST">
-            {{-- <form action="#" method="POST"> --}}
+        <form action="{{ route('saveUpdate', $toEdit->product_id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="mb-3">
@@ -46,36 +45,98 @@
                 </select>
             </div>
 
+
+            <div>
+                @php $formCounter = 1 @endphp
+                @foreach ($variants as $item)
+                    @method('put')
+                    @csrf
+                    <h3>Variant {{ $formCounter }}</h3>
+
+                    <label for="variant_name{{ $formCounter }}">Variant Name</label>
+                    <input type="text" id="variant_name{{ $formCounter }}" name="variant_name{{ $formCounter }}"
+                        value="{{ $item->variant_name }}" required>
+
+                    <label for="color{{ $formCounter }}">Color </label>
+                    <input type="text" id="color{{ $formCounter }}" name="color{{ $formCounter }}"
+                        value="{{ $item->color }}" required>
+
+                    <label for="description{{ $formCounter }}">Description </label>
+                    <input type="text" id="description{{ $formCounter }}" name="description{{ $formCounter }}"
+                        value="{{ $item->description }}" required>
+
+                    <input type="hidden" id="variant_id{{ $formCounter }}" name="variant_id{{ $formCounter }}"
+                        value="{{ $item->variant_id }}">
+                    @php $formCounter++ @endphp
+
+                    <script>
+                        let formCounter = {{ $formCounter }};
+                    </script>
+                    <button class="btn btn-info" id="delete" name="delete"
+                        value="{{ $item->variant_id }}">Delete</button>
+                    <hr>
+                @endforeach
+            </div>
+
+
+
             <input type="hidden" id="formCounter" name="formCounter" value="0">
-
-
             <div id="dynamicFormsContainer">
             </div>
 
-            <script>
-                const variantsData = @json($variants ?? []);
-
-                document.addEventListener('DOMContentLoaded', function() {
-                    variantsData.forEach(function(variant) {
-                        addDynamicForm(variant);
-                    });
-                });
-            </script>
-
             <button type="button" onclick="addDynamicForm()">Add Another Form</button>
-
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button onclick="submitForms()" class="btn btn-primary">Submit</button>
         </form>
 
-        @foreach ($images as $item)
-            <img src="{{ asset('storage/images/'.$item->image) }}
-            ">
-        @endforeach
+        <div id="carouselExample" class="carousel slide">
+            <div class="carousel-inner">
+                @foreach ($images as $key => $item)
+                    <div class="carousel-item {{ $key === 0 ? 'active' : '' }} pb-5">
+                        <img src="{{ asset('storage/images/' . $item->image) }}" class="d-block w-100" alt="..."
+                            style="object-fit: contain; max-height: 60vh;">
+                        <div class="position-relative top-10">
+                            <form class="position-absolute bottom-20 start-50 translate-middle"
+                                action="{{ route('deleteImage', $item->image_id) }}" method="POST">
+                                @method('delete')
+                                @csrf
+                                <input type="hidden" id="{}">
+                                <button type="submit" class="delete-button">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+        <form action="{{ route('saveUpdate', $toEdit->product_id) }}" method="POST"
+            enctype="multipart/form-data">
+            @method('put')
+            @csrf
+            <div class="mb-3">
+                <label for="image" class="form-label">Image Add</label>
+                <img class="img-preview img-fluid mb-3 col-sm-5">
+                <input class="form-control" type="file" id="image" name="image"
+                    accept="image/jpg, image/png, image/jpeg" onchange="previewImage()">
+                <button>Add Image</button>
+            </div>
+        </form>
+
+
     </div>
 @endsection
 
+
 <script>
-    let formCounter = 0;
+    let formCounter = {{ $formCounter ?? 0 }};
+    formCounter = formCounter ? formCounter + 1 : 0;
 
     function addDynamicForm() {
         formCounter++;
@@ -84,7 +145,7 @@
         dynamicForm.classList.add('mb-3');
         dynamicForm.id = `variant_form_${formCounter}`;
         dynamicForm.innerHTML = `
-            <h3 for="field_${formCounter}">Variant ${formCounter}</h3>
+            <h3 for="field_${formCounter}">Add Variant ${formCounter}</h3>
 
             <!-- New form fields -->
             <label for="variant_name${formCounter}">Variant Name</label>
@@ -96,30 +157,41 @@
             <label for="description${formCounter}">Description </label>
             <input type="text" id="description${formCounter}" name="description${formCounter}" required>
 
-            <input type="hidden" id="variant_id${formCounter}" name="variant_id${formCounter}">
-            <button type="button" onclick="removeDynamicForm(${formCounter}, 'variant_id${formCounter}')">Remove</button>
-
+            <button type="button" onclick="removeDynamicForm(${formCounter})">Remove</button>
             <!-- You can add more fields as needed -->
 
             <hr> <!-- Optional: Add a separator between forms -->
         `;
 
         document.getElementById('dynamicFormsContainer').appendChild(dynamicForm);
-
-        // Set values from $variants if available
-        const variantData = @json($variants ?? null);
-        if (variantData) {
-            document.getElementById(`variant_name${formCounter}`).value = variantData[formCounter - 1].variant_name;
-            document.getElementById(`color${formCounter}`).value = variantData[formCounter - 1].color;
-            document.getElementById(`description${formCounter}`).value = variantData[formCounter - 1].description;
-            document.getElementById(`variant_id${formCounter}`).value = variantData[formCounter - 1].variant_id;
-        }
-
         document.getElementById('formCounter').value = formCounter;
     }
 
-    function removeDynamicForm(formNumber, variantId) {
+    function removeDynamicForm(formNumber) {
         const dynamicForm = document.getElementById(`variant_form_${formNumber}`);
         dynamicForm.remove();
+    }
+
+    function previewImage() {
+        const image = document.querySelector('#image');
+        const imgPreview = document.querySelector('.img-preview');
+
+        imgPreview.style.display = 'block';
+
+        const ofReader = new FileReader();
+        ofReader.readAsDataURL(image.files[0]);
+
+        ofReader.onload = function(oFREvent) {
+            imgPreview.src = oFREvent.target.result;
+        }
+    }
+
+    function submitForms() {
+        // document.getElementById('productForm').submit();
+
+        const formCount = {{ $formCounter }};
+        for (let i = 1; i <= formCount; i++) {
+            document.getElementById(`variantForm${i}`).submit();
+        }
     }
 </script>

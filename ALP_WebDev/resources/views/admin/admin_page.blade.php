@@ -14,6 +14,9 @@
         <form method="GET" action="{{ route('createProduct') }}">
             <button class="btn btn-primary" href="create.blade.php">Add Product</button>
         </form>
+        <form method="GET" action="{{ route('createEvent') }}">
+            <button class="btn btn-primary" href="create.blade.php">Create Event</button>
+        </form>
 
     </div>
 

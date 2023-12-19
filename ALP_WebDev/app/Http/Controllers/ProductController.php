@@ -111,32 +111,38 @@ class ProductController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, $id)
-    // public function update(Request $request, Product $product)
     {
-        // $product->update([
-        //     'product_name' => $request->input('product_name'),
-        //     'description' => $request->input('description'),
-        //     'price' => $request->input('price'),
-        //     'category_id' => $request->input('category_id'),
-        //     'discount_percent' => $request->input('discount_percent'),
-        //     'best_seller' => $request->input('best_seller'),
-        // ]);
 
-        DB::table('products')->where('product_id', $id)->update([
-            'product_name' => $request->input('product_name'),
-            'description' => $request->input('description'),
-            'price' => $request->input('price'),
-            'category_id' => $request->input('category_id'),
-            'discount_percent' => $request->input('discount_percent'),
-            'best_seller' => $request->input('best_seller'),
-            'final_price' => $request->price - ($request->price * ($request->discount_percent / 100)),
-        ]);
+        // dd($request->file('image'));
+        // dd($request->all());
+        // dd($request->delete);
 
-        for ($i = 1; $i <= $request->input('formCounter')+1; $i++) {
+        if ($request->filled('product_name')) {
+            DB::table('products')->where('product_id', $id)->update([
+                'product_name' => $request->input('product_name'),
+                'description' => $request->input('description'),
+                'price' => $request->input('price'),
+                'category_id' => $request->input('category_id'),
+                'discount_percent' => $request->input('discount_percent'),
+                'best_seller' => $request->input('best_seller'),
+                'final_price' => $request->price - ($request->price * ($request->discount_percent / 100)),
+            ]);
+
+            if ($request->file('image')) {
+                $imageFile = $request->file('image');
+                $hashedFilename = $imageFile->hashName();
+                $imageFile->storeAs('images', $hashedFilename, 'public');
+                DB::table('images')->insert([
+                    'product_id' => $id,
+                    'image' => $hashedFilename,
+                ]);
+            }
+        }
+
+        for ($i = 1; $i <= $request->input('formCounter') + 1; $i++) {
             $variantName = $request->input("variant_name{$i}");
             $color = $request->input("color{$i}");
             $description = $request->input("description{$i}");
-            // Check if any of the fields is null, and skip adding the variant
             if ($variantName !== null || $color !== null || $description !== null) {
                 if ($request->filled("variant_id{$i}")) {
                     $variant = DB::table('variants')->where('variant_id', $request->input("variant_id{$i}"))->update([
@@ -155,13 +161,14 @@ class ProductController extends Controller
             }
         }
 
-        // dd($request->all());
+        if(isset($request->delete)) {
+            DB::table('variants')->where('variant_id', $request->delete)->delete();
+            return redirect()->back();
+        }
+
         return redirect()->route('homepage');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy($id)
     {
         DB::table('products')->where('product_id', $id)->delete();
@@ -172,5 +179,9 @@ class ProductController extends Controller
     {
         $products = DB::table('products')->get();
         return view('admin.admin_page', compact('products'));
+    }
+
+    public function deleteVariant($id) {
+
     }
 }

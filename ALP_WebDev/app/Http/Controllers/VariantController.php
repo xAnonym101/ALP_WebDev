@@ -62,7 +62,6 @@ class VariantController extends Controller
      */
     public function destroy($id)
     {
-        dd($id);
         DB::table('variants')->where('variant_id', $id)->delete();
         return redirect()->back();
     }
