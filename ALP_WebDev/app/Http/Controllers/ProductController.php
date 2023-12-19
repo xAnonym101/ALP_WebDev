@@ -193,15 +193,17 @@ class ProductController extends Controller
         $products = DB::table('products')->get();
         $categories = DB::table('categories')->get();
         $events = DB::table('events')->get();
+        $phones = DB::table('phones')->get();
+        $socials = DB::table('socials')->get();
 
         if ($categories->count() > 0 && $events->count() > 0) {
-            return view('admin.admin_page', compact('products', 'categories', 'events'));
+            return view('admin.admin_page', compact('products', 'categories', 'events', 'phones', 'socials'));
         } elseif ($categories->count() > 0) {
-            return view('admin.admin_page', compact('products', 'categories'));
+            return view('admin.admin_page', compact('products', 'categories', 'phones', 'socials'));
         } elseif ($events->count() > 0) {
-            return view('admin.admin_page', compact('products', 'events'));
+            return view('admin.admin_page', compact('products', 'events', 'phones', 'socials'));
         } else {
-            return view('admin.admin_page', compact('products'));
+            return view('admin.admin_page', compact('products', 'phones', 'socials'));
         }
     }
 

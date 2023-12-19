@@ -19,6 +19,12 @@
         <form method="GET" action="{{ route('createEvent') }}">
             <button class="btn btn-primary" href="create.blade.php">Create Event</button>
         </form>
+        <form method="GET" action="{{ route('createPhone') }}">
+            <button class="btn btn-primary" href="create.blade.php">Add Phone Number</button>
+        </form>
+        <form method="GET" action="{{ route('createSocial') }}">
+            <button class="btn btn-primary" href="create.blade.php">Add Social Media</button>
+        </form>
     </div>
 
     <div>
@@ -165,4 +171,70 @@
             </tbody>
         </table>
     @endif
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Phone Number</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (!empty($phones))
+                @foreach ($phones as $data)
+                    <tr>
+                        <td scope="col">{{ $data->phone_id }}</td>
+                        <td scope="col">{{ $data->phone_number }}</td>
+                        <td>
+                            <a href={{ route('updatePhone', $data->phone_id) }} class="btn btn-primary">Update</a>
+                            <form action="{{ route('deletePhone', $data->phone_id) }}" method="POST"
+                                style="display: inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger"
+                                    onclick="return confirm('Are you sure?')">Delete</button>
+                            </form>
+                        </td>
+                        </td>
+                    </tr>
+                @endforeach
+            @endif
+        </tbody>
+    </table>
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Social Media Name</th>
+                <th scope="col">Social Media Link</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (!empty($socials))
+                @foreach ($socials as $data)
+                    <tr>
+                        <td scope="col">{{ $data->social_id }}</td>
+                        <td scope="col">{{ $data->socialmedia_name }}</td>
+                        <td scope="col">{{ $data->socialmedia_link }}</td>
+                        <td>
+                            <a href={{ route('updateSocial', $data->social_id) }} class="btn btn-primary">Update</a>
+                            <form action="{{ route('deleteSocial', $data->social_id) }}" method="POST"
+                                style="display: inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger"
+                                    onclick="return confirm('Are you sure?')">Delete</button>
+                            </form>
+                        </td>
+                        </td>
+                    </tr>
+                @endforeach
+            @endif
+        </tbody>
+    </table>
+
 @endsection

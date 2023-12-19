@@ -15,6 +15,7 @@ class Social extends Model
         'socialmedia_icon',
         'socialmedia_name',
         'socialmedia_link',
+        'user_id',
 
     ];
 
