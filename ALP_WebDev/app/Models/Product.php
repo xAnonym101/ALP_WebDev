@@ -19,6 +19,7 @@ class Product extends Model
         'discount_percent',
         'final_price',
         'category_id',
+        'event_id',
 
     ];
 

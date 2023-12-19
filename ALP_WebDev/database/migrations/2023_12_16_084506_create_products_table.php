@@ -31,7 +31,7 @@ return new class extends Migration
             $table->foreign('event_id')
                 ->references('event_id')
                 ->on('events')
-                ->onDelete('cascade');
+                ->onDelete('set null');
         });
     }
 

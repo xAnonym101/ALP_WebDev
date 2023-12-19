@@ -7,6 +7,7 @@ use App\Http\Requests\StoreEventRequest;
 use App\Http\Requests\UpdateEventRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class EventController extends Controller
 {
@@ -60,24 +61,31 @@ class EventController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Event $event)
+    public function edit($id)
     {
+        $event = DB::table('events')->where('event_id', $id)->first();
+        return view('admin.edit_event', compact('event'));
         //
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateEventRequest $request, Event $event)
+    public function update(Request $request, $id)
     {
-        //
+        DB::table('events')->where('event_id', $id)->update([
+            'event_name' => $request->event_name,
+        ]);
+
+        return redirect()->route('homepage');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Event $event)
+    public function destroy($id)
     {
-        //
+        DB::table('events')->where('event_id', $id)->delete();
+        return redirect()->route('homepage');
     }
 }

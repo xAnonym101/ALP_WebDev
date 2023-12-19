@@ -37,6 +37,24 @@
                     @endforeach
                 </select>
             </div>
+
+            <div class="mb-3">
+                <label for="category_id" class="form-label">Events</label>
+                <select name="event_id" id="event_id" Required>
+                    @foreach ($events as $option)
+                        @if ($toEdit->event_id)
+                            @if (old('event_id', $toEdit->event_id) === $option->event_id)
+                                <option value="{{ $option->event_id }}" selected>{{ $option->event_name }}</option>
+                            @else
+                                <option value="{{ $option->event_id }}">{{ $option->event_name }}</option>
+                            @endif
+                        @else
+                            <option value="{{ $option->event_id }}">{{ $option->event_name }}</option>
+                        @endif
+                    @endforeach
+                </select>
+            </div>
+
             <div class="mb-3">
                 <label for="best_seller" class="form-label">Best Seller</label>
                 <select name="best_seller" id="best_seller" Required>
@@ -116,8 +134,7 @@
             </button>
         </div>
 
-        <form action="{{ route('saveUpdate', $toEdit->product_id) }}" method="POST"
-            enctype="multipart/form-data">
+        <form action="{{ route('saveUpdate', $toEdit->product_id) }}" method="POST" enctype="multipart/form-data">
             @method('put')
             @csrf
             <div class="mb-3">

@@ -20,11 +20,18 @@ use App\Http\Controllers\VariantController;
 */
 
 Route::get('/', [ProductController::class, 'productsList'])->middleware('auth')->name('homepage');
+
 Route::get('/createCategory', [CategoryController::class, 'create'])->middleware('auth')->name('createCategory');
 Route::post('/storeCategory', [CategoryController::class, 'store'])->middleware('auth')->name('storeCategory');
+Route::get('/updateCategory/{id}', [CategoryController::class, 'edit'])->middleware('auth')->name('updateCategory');
+Route::put('/saveCategory/{id}', [CategoryController::class, 'update'])->middleware('auth')->name('saveCategory');
+Route::delete('/deleteCategory/{id}', [CategoryController::class, 'destroy'])->middleware('auth')->name('deleteCategory');
 
 Route::get('/createEvent', [EventController::class, 'create'])->middleware('auth')->name('createEvent');
 Route::post('/storeEvent', [EventController::class, 'store'])->middleware('auth')->name('storeEvent');
+Route::get('/updateEvent/{id}', [EventController::class, 'edit'])->middleware('auth')->name('updateEvent');
+Route::put('/saveEvent/{id}', [EventController::class, 'update'])->middleware('auth')->name('saveEvent');
+Route::delete('/deleteEvent/{id}', [EventController::class, 'destroy'])->middleware('auth')->name('deleteEvent');
 
 
 Route::get('/createProduct', [ProductController::class, 'create'])->middleware('auth')->name('createProduct');

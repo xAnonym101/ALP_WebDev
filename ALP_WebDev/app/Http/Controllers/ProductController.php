@@ -104,7 +104,8 @@ class ProductController extends Controller
         $toEdit = Product::where('product_id', $id)->first();
         $variants = Variant::where('product_id', $id)->get();
         $images = Image::where('product_id', $id)->get();
-        return view('admin.update_product', compact('categories', 'toEdit', 'variants', 'images'));
+        $events = DB::table('events')->get();
+        return view('admin.edit_product', compact('categories', 'toEdit', 'variants', 'images', 'events'));
     }
 
     /**
@@ -118,25 +119,37 @@ class ProductController extends Controller
         // dd($request->delete);
 
         if ($request->filled('product_name')) {
-            DB::table('products')->where('product_id', $id)->update([
-                'product_name' => $request->input('product_name'),
-                'description' => $request->input('description'),
-                'price' => $request->input('price'),
-                'category_id' => $request->input('category_id'),
-                'discount_percent' => $request->input('discount_percent'),
-                'best_seller' => $request->input('best_seller'),
-                'final_price' => $request->price - ($request->price * ($request->discount_percent / 100)),
-            ]);
-
-            if ($request->file('image')) {
-                $imageFile = $request->file('image');
-                $hashedFilename = $imageFile->hashName();
-                $imageFile->storeAs('images', $hashedFilename, 'public');
-                DB::table('images')->insert([
-                    'product_id' => $id,
-                    'image' => $hashedFilename,
+            if ($request->filled('event_id')) {
+                DB::table('products')->where('product_id', $id)->update([
+                    'product_name' => $request->input('product_name'),
+                    'description' => $request->input('description'),
+                    'event_id' => $request->input('event_id'),
+                    'price' => $request->input('price'),
+                    'category_id' => $request->input('category_id'),
+                    'discount_percent' => $request->input('discount_percent'),
+                    'best_seller' => $request->input('best_seller'),
+                    'final_price' => $request->price - ($request->price * ($request->discount_percent / 100)),
+                ]);
+            } else {
+                DB::table('products')->where('product_id', $id)->update([
+                    'product_name' => $request->input('product_name'),
+                    'description' => $request->input('description'),
+                    'price' => $request->input('price'),
+                    'category_id' => $request->input('category_id'),
+                    'discount_percent' => $request->input('discount_percent'),
+                    'best_seller' => $request->input('best_seller'),
+                    'final_price' => $request->price - ($request->price * ($request->discount_percent / 100)),
                 ]);
             }
+        }
+        if ($request->file('image')) {
+            $imageFile = $request->file('image');
+            $hashedFilename = $imageFile->hashName();
+            $imageFile->storeAs('images', $hashedFilename, 'public');
+            DB::table('images')->insert([
+                'product_id' => $id,
+                'image' => $hashedFilename,
+            ]);
         }
 
         for ($i = 1; $i <= $request->input('formCounter') + 1; $i++) {
@@ -161,7 +174,7 @@ class ProductController extends Controller
             }
         }
 
-        if(isset($request->delete)) {
+        if (isset($request->delete)) {
             DB::table('variants')->where('variant_id', $request->delete)->delete();
             return redirect()->back();
         }
@@ -178,10 +191,21 @@ class ProductController extends Controller
     public function productsList()
     {
         $products = DB::table('products')->get();
-        return view('admin.admin_page', compact('products'));
+        $categories = DB::table('categories')->get();
+        $events = DB::table('events')->get();
+
+        if ($categories->count() > 0 && $events->count() > 0) {
+            return view('admin.admin_page', compact('products', 'categories', 'events'));
+        } elseif ($categories->count() > 0) {
+            return view('admin.admin_page', compact('products', 'categories'));
+        } elseif ($events->count() > 0) {
+            return view('admin.admin_page', compact('products', 'events'));
+        } else {
+            return view('admin.admin_page', compact('products'));
+        }
     }
 
-    public function deleteVariant($id) {
-
+    public function deleteVariant($id)
+    {
     }
 }

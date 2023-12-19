@@ -60,24 +60,31 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Category $category)
+    public function edit($id)
     {
-        //
+        $category = DB::table('categories')->where('category_id', $id)->first();
+        return view('admin.edit_category', compact('category'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCategoryRequest $request, Category $category)
+    public function update(Request $request, $id)
     {
-        //
+        DB::table('categories')->where('category_id', $id)->update([
+            'category_name' => $request->category_name,
+        ]);
+
+        return redirect()->route('homepage');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
-        //
+        DB::table('categories')->where('category_id', $id)->delete();
+
+        return redirect()->route('homepage');
     }
 }
