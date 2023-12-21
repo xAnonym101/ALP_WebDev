@@ -21,35 +21,48 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/logo-16x16.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('img/logo-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="64x64" href="{{ asset('img/logo-64x64.png') }}">
+
+    <link rel="shortcut icon" href="{{ asset('img/logo.png') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('img/logo.png') }}" type="image/x-icon">
 </head>
 
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#">Navbar</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{{ route('homepage') }}">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Features</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Pricing</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-                        </li>
-                    </ul>
+                    <div class="container-fluid">
+                        <div class="collapse navbar-collapse" id="navbarNav">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link {{ $Home ?? '' }}" aria-current="page" href="/home">Home</a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                                        aria-expanded="false">Shop</a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a class="nav-link {{ $all_products ?? '' }}" href="/all_products">all products</a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a class="nav-link {{ $new_arrival ?? '' }}" href="/new_arrival">new arrival</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link {{ $sale ?? '' }}" href="/sale">sale</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {{ $best_seller ?? '' }}" href="/best_seller">best seller</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {{ $about_us ?? '' }}" href="/aboutus">About us</a>
+                                </li>
 
                     <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
+                    <ul class="navbar-nav ms-auto ">
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))

@@ -24,7 +24,7 @@
             <div class="mb-3">
                 <label for="image" class="form-label">Image Upload</label>
                 <img class="img-preview img-fluid mb-3 col-sm-5">
-                <input class="form-control" type="file" id="image" name="image"
+                <input class="form-control" type="file" id="image" name="image" required
                     accept="image/jpg, image/png, image/jpeg" onchange="previewImage()">
             </div>
             <div class="mb-3">

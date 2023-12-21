@@ -3,7 +3,10 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mx-auto text-center">
                 <li>
-                    <a class="navbar-brand" href="/">Jent Collections</a>
+                    <a class="navbar-brand" href="/">
+                        <img src="{{ asset('img/logo.png') }}" alt="logo" class="img-fluid" style="max-height: 40px;"">
+                        Jent Collections
+                    </a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -19,7 +22,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mx-auto text-center">
                 <li class="nav-item">
-                    <a class="nav-link {{ $Home ?? '' }}" aria-current="page" href="/">Home</a>
+                    <a class="nav-link {{ $Home ?? '' }}" aria-current="page" href="/home">Home</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
@@ -41,7 +44,7 @@
                     <a class="nav-link {{ $best_seller ?? '' }}" href="/best_seller">best seller</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ $about_us ?? '' }}" href="/aboutus">About us</a>
+                    <a class="nav-link {{ $about_us ?? '' }}" href="/about_us">About us</a>
                 </li>
 
         </div>

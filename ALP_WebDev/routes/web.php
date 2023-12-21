@@ -21,14 +21,48 @@ use App\Http\Controllers\VariantController;
 |
 */
 
-Route::get('/', function () {
+Route::get('/home', function () {
     return view('home',
     [
-        "pagetitle" => "About Us",
-        "maintitle" => "Virgo Furnishers",
-        "about"=> "active",
+        "pagetitle" => "home"
     ]);
 });
+
+Route::get('/about_us', function () {
+    return view('about_us',
+    [
+        "pagetitle" => "about us"
+    ]);
+});
+
+Route::get('/best_seller', function () {
+    return view('best_seller',
+    [
+        "pagetitle" => "best seller"
+    ]);
+});
+
+Route::get('/sale', function () {
+    return view('sale',
+    [
+        "pagetitle" => "sale"
+    ]);
+});
+
+Route::get('/new_arrival', function () {
+    return view('new_arrival',
+    [
+        "pagetitle" => "new_arrival"
+    ]);
+});
+
+Route::get('/all_products', function () {
+    return view('all_products',
+    [
+        "pagetitle" => "all products"
+    ]);
+});
+
 Route::get('/', [ProductController::class, 'productsList'])->middleware('auth')->name('homepage');
 
 Route::get('/createCategory', [CategoryController::class, 'create'])->middleware('auth')->name('createCategory');

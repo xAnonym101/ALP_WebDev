@@ -14,6 +14,12 @@
         integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous">
     </script>
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/logo-16x16.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('img/logo-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="64x64" href="{{ asset('img/logo-64x64.png') }}">
+
+    <link rel="shortcut icon" href="{{ asset('img/logo.png') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('img/logo.png') }}" type="image/x-icon">
 </head>
 
 <body class=""style=" ;">
