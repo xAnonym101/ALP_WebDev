@@ -13,12 +13,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('categories')->insert([
-            'category_name' => 'Tops',
-        ]);
-
-        DB::table('categories')->insert([
-            'category_name' => 'Bottoms',
+        $this->call([
+            UserSeeder::class,
+            PhoneSeeder::class,
+            SocialSeeder::class,
+            CategorySeeder::class,
+            EventSeeder::class,
+            ProductSeeder::class,
+            VariantSeeder::class,
+            ImageSeeder::class,
         ]);
     }
 }

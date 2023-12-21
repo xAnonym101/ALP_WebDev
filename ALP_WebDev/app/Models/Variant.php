@@ -15,6 +15,7 @@ class Variant extends Model
         'variant_name',
         'color',
         'description',
+        'product_id'
 
     ];
 
