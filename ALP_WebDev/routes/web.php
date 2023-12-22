@@ -35,33 +35,15 @@ Route::get('/about_us', function () {
     ]);
 });
 
-Route::get('/best_seller', function () {
-    return view('best_seller',
-    [
-        "pagetitle" => "best seller"
-    ]);
-});
+Route::get("/sale", [ProductController::class, 'saleproduct'])->name('sale');
 
-Route::get('/sale', function () {
-    return view('sale',
-    [
-        "pagetitle" => "sale"
-    ]);
-});
+Route::get("/best_seller", [ProductController::class, 'bestseller'])->name('bestseller');
 
-Route::get('/new_arrival', function () {
-    return view('new_arrival',
-    [
-        "pagetitle" => "new_arrival"
-    ]);
-});
+Route::get("/products_details/{id}", [ProductController::class, 'productdetail'])->name('products_details');
 
-Route::get('/all_products', function () {
-    return view('all_products',
-    [
-        "pagetitle" => "all products"
-    ]);
-});
+Route::get("/all_products", [ProductController::class, 'allproducts'])->name('allproducts');
+
+Route::get("/new_arrival", [ProductController::class, 'newarrival'])->name('newarrival');
 
 Route::get('/', [ProductController::class, 'productsList'])->middleware('auth')->name('homepage');
 

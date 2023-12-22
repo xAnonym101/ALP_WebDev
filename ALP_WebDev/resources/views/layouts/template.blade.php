@@ -13,6 +13,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
         integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous">
     </script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyUtYm62J/KZ/xW5g7SdFL2KxIMJoG6jB2" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-Xd1pE7LEdFvCGRT7wPcGo1tPNUd8bXKhI7Rzo5TC1n2Rn7IDe5I4wBE5ByE02yl2" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyUtYm62J/KZ/xW5g7SdFL2KxIMJoG6jB2" crossorigin="anonymous"></script>
+
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/logo-16x16.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('img/logo-32x32.png') }}">
@@ -33,7 +38,11 @@
     <div class=" overflow-hidden">
         @yield('gbr')
     </div>
-
+    <script>
+        $(document).ready(function () {
+            $('#imageCarousel').carousel();
+        });
+    </script>
 </body>
 <footer class="p-5 mt-5" style="background-color: rgb(122, 49, 49);">
     <div class="container">

@@ -40,7 +40,7 @@
 
             <div class="mb-3">
                 <label for="category_id" class="form-label">Events</label>
-                <select name="event_id" id="event_id" Required>
+                <select name="event_id" id="event_id">
                     @foreach ($events as $option)
                         @if ($toEdit->event_id)
                             @if (old('event_id', $toEdit->event_id) === $option->event_id)

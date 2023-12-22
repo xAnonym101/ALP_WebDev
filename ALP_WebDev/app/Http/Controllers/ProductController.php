@@ -59,7 +59,7 @@ class ProductController extends Controller
 
         if ($request->file('image')) {
             // dd($request->file('image'));
-            $imageFile->storeAs('images', $hashedFilename, 'public');
+            $imageFile->storeAs('images', $hashedFilename, ['disk'=>'public'] );
             $images[] = [
                 'image' => $hashedFilename,
             ];
@@ -206,6 +206,108 @@ class ProductController extends Controller
             return view('admin.admin_page', compact('products', 'phones', 'socials'));
         }
     }
+
+    public function allproducts()
+    {
+        $products = DB::table('products')->get();
+        $categories = DB::table('categories')->get();
+        $events = DB::table('events')->get();
+        $phones = DB::table('phones')->get();
+        $socials = DB::table('socials')->get();
+        $images = DB::table('images')->get();
+
+        if ($categories->count() > 0 && $events->count() > 0) {
+            return view('all_products', compact('products', 'categories', 'events', 'phones', 'socials', 'images'),["pagetitle" => "all products"]);
+        } elseif ($categories->count() > 0) {
+            return view('all_products', compact('products', 'categories', 'phones', 'socials', 'images'),["pagetitle" => "all products"]);
+        } elseif ($events->count() > 0) {
+            return view('all_products', compact('products', 'events', 'phones', 'socials', 'images'),["pagetitle" => "all products"]);
+        } else {
+            return view('all_products', compact('products', 'phones', 'socials', 'images'),["pagetitle" => "all products"]);
+        }
+    }
+
+
+    public function newarrival()
+    {
+        $products = DB::table('products')->get();
+        $categories = DB::table('categories')->get();
+        $events = DB::table('events')->get();
+        $phones = DB::table('phones')->get();
+        $socials = DB::table('socials')->get();
+        $images = DB::table('images')->get();
+
+        if ($categories->count() > 0 && $events->count() > 0) {
+            return view('new_arrival', compact('products', 'categories', 'events', 'phones', 'socials', 'images'),["pagetitle" => "new arrivals"]);
+        } elseif ($categories->count() > 0) {
+            return view('new_arrival', compact('products', 'categories', 'phones', 'socials', 'images'),["pagetitle" => "new arrivals"]);
+        } elseif ($events->count() > 0) {
+            return view('new_arrival', compact('products', 'events', 'phones', 'socials', 'images'),["pagetitle" => "new arrivals"]);
+        } else {
+            return view('new_arrival', compact('products', 'phones', 'socials', 'images'),["pagetitle" => "new arrivals"]);
+        }
+    }
+
+    public function bestseller()
+    {
+        $products = DB::table('products')->get();
+        $categories = DB::table('categories')->get();
+        $events = DB::table('events')->get();
+        $phones = DB::table('phones')->get();
+        $socials = DB::table('socials')->get();
+        $images = DB::table('images')->get();
+
+        if ($categories->count() > 0 && $events->count() > 0) {
+            return view('best_seller', compact('products', 'categories', 'events', 'phones', 'socials', 'images'),["pagetitle" => "best seller"]);
+        } elseif ($categories->count() > 0) {
+            return view('best_seller', compact('products', 'categories', 'phones', 'socials', 'images'),["pagetitle" => "best seller"]);
+        } elseif ($events->count() > 0) {
+            return view('best_seller', compact('products', 'events', 'phones', 'socials', 'images'),["pagetitle" => "best seller"]);
+        } else {
+            return view('best_seller', compact('products', 'phones', 'socials', 'images'),["pagetitle" => "best seller"]);
+        }
+    }
+
+    public function saleproduct()
+    {
+        $products = DB::table('products')->get();
+        $categories = DB::table('categories')->get();
+        $events = DB::table('events')->get();
+        $phones = DB::table('phones')->get();
+        $socials = DB::table('socials')->get();
+        $images = DB::table('images')->get();
+
+        if ($categories->count() > 0 && $events->count() > 0) {
+            return view('sale', compact('products', 'categories', 'events', 'phones', 'socials', 'images'),["pagetitle" => "sale"]);
+        } elseif ($categories->count() > 0) {
+            return view('sale', compact('products', 'categories', 'phones', 'socials', 'images'),["pagetitle" => "sale"]);
+        } elseif ($events->count() > 0) {
+            return view('sale', compact('products', 'events', 'phones', 'socials', 'images'),["pagetitle" => "sale"]);
+        } else {
+            return view('sale', compact('products', 'phones', 'socials', 'images'),["pagetitle" => "sale"]);
+        }
+    }
+
+    public function productdetail($product_id)
+    {
+        $products = DB::table("products")->where("product_id", $product_id)->first();
+        $categories = DB::table('categories')->get();
+        $events = DB::table('events')->get();
+        $phones = DB::table('phones')->get();
+        $socials = DB::table('socials')->get();
+        $images = DB::table('images')->get();
+
+        if ($categories->count() > 0 && $events->count() > 0) {
+            return view('products_details', compact('products', 'categories', 'events', 'phones', 'socials', 'images'),["pagetitle" => "product detail"]);
+        } elseif ($categories->count() > 0) {
+            return view('products_details', compact('products', 'categories', 'phones', 'socials', 'images'),["pagetitle" => "product detail"]);
+        } elseif ($events->count() > 0) {
+            return view('products_details', compact('products', 'events', 'phones', 'socials', 'images'),["pagetitle" => "product detail"]);
+        } else {
+            return view('products_details', compact('products', 'phones', 'socials', 'images'),["pagetitle" => "product detail"]);
+        }
+    }
+
 
     public function deleteVariant($id)
     {
