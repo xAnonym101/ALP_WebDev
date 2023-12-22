@@ -1,6 +1,12 @@
 @extends('layouts.template')
 
 @section('layout_content1')
+<div class="d-flex justify-content-center align-items-center py-3">
+    <form action="/sale" method="GET" class="form-inline flex-grow-1 w-25 d-flex gap-2">
+        <input class="form-control" type="search" name="search" placeholder="Search">
+        <button type="submit" class="btn btn-outline-success">Search</button>
+    </form>
+</div>
     <div class="row">
         @foreach ($products as $data)
             @if ($data->discount_percent >= 30)

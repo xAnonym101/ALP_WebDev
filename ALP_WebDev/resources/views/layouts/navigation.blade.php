@@ -43,9 +43,6 @@
                 <li class="nav-item">
                     <a class="nav-link {{ $best_seller ?? '' }}" href="/best_seller">best seller</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ $about_us ?? '' }}" href="/about_us">About us</a>
-                </li>
 
         </div>
     </div>

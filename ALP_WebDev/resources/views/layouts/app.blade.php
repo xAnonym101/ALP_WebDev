@@ -57,9 +57,6 @@
                                 <li class="nav-item">
                                     <a class="nav-link {{ $best_seller ?? '' }}" href="/best_seller">best seller</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link {{ $about_us ?? '' }}" href="/aboutus">About us</a>
-                                </li>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto ">

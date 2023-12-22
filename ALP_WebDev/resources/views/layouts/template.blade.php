@@ -57,10 +57,11 @@
                 <p><a href="#" class="text-white">about us</a></p>
             </div>
             <div class="col-md-4">
-                <h5>Contact Information</h5>
-                <p>Email: main_branch@example.com</p>
-                <p>Phone: 333-444-5555</p>
-                <p>Address: Main Street, City A</p>
+                <h5>About us</h5>
+                <p>
+                Provided you best clothing and style since 2015! Not only style, jent.collections also provides you fashion with good quality.<br>
+                Welcoming you to the family, #jentbabes!❤
+                </p>
             </div>
             <div class="col-md-4">
                 <h5>Follow Us</h5>
@@ -69,7 +70,7 @@
                     @foreach ($socials as $social)
                         <li class="list-inline-item">
                             <a href="{{ \Illuminate\Support\Str::startsWith($social->socialmedia_link, ['http://', 'https://']) ? $social->socialmedia_link : 'https://' . $social->socialmedia_link }}" class="text-white">
-                                <img src="{{ asset('storage/image/' . $social->socialmedia_icon) }}" alt="{{ $social->socialmedia_name }}" style="width: 20px; height: 20px;">
+                                <img src="{{ asset('storage/images/' . $social->socialmedia_icon) }}" alt="{{ $social->socialmedia_name }}" style="width: 30px; height: 30px;">
                             </a>
                         </li>
                     @endforeach
