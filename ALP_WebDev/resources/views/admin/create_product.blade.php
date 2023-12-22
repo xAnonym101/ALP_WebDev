@@ -12,15 +12,19 @@
             </div>
             <div class="mb-3">
                 <label for="description" class="form-label">Description</label>
-                <input type="text" class="form-control" id="description" name="description" placeholder="description" Required>
+                <input type="text" class="form-control" id="description" name="description" placeholder="Description" Required>
             </div>
             <div class="mb-3">
                 <label for="price" class="form-label">Price</label>
-                <input type="text" class="form-control" id="price" name="price" placeholder="price" Required>
+                <input type="text" class="form-control" id="price" name="price" placeholder="Price" Required>
             </div>
             <div class="mb-3">
                 <label for="discount_percent" class="form-label">Discount</label>
-                <input type="text" class="form-control" id="discount_percent" name="discount_percent" placeholder="discount_percent" Required>
+                <input type="text" class="form-control" id="discount_percent" name="discount_percent" placeholder="Discount (NUMBERS ONLY)" Required>
+            </div>
+            <div class="mb-3">
+                <label for="link" class="form-label">Link</label>
+                <input type="text" class="form-control" id="link" name="link" placeholder="Link?" Required>
             </div>
             <div class="mb-3">
                 <label for="image" class="form-label">Image Upload</label>
@@ -28,13 +32,24 @@
                 <input class="form-control" type="file" id="image" name="image" required
                     accept="image/jpg, image/png, image/jpeg" onchange="previewImage()">
             </div>
-            <div class="mb-3">
-                <label for="category_id" class="form-label">Category</label>
-                <select name="category_id" id="category_id" Required>
-                    @foreach ($categories as $option)
-                        <option value="{{$option->category_id}}">{{$option->category_name}}</option>
-                    @endforeach
-                </select>
+            <div class="d-flex gap-5">
+                <div class="mb-3">
+                    <label for="category_id" class="form-label">Category</label>
+                    <select name="category_id" id="category_id" Required>
+                        @foreach ($categories as $option)
+                            <option value="{{$option->category_id}}">{{$option->category_name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="event_id" class="form-label">Events</label>
+                    <select name="event_id" id="event_id">
+                        <option value="0">None</option>
+                        @foreach ($events as $option)
+                            <option value="{{ $option->event_id }}">{{ $option->event_name }}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
 
             <input type="hidden" id="formCounter" name="formCounter" value="0">
@@ -49,6 +64,9 @@
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
+
+    <br>
+
 @endsection
 
 <script>

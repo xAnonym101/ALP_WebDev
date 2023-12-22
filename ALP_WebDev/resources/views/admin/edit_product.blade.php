@@ -11,25 +11,30 @@
             <div class="mb-3">
                 <label for="product_name" class="form-label">Product Name</label>
                 <input type="text" class="form-control" id="product_name" name="product_name"
-                    placeholder="Enter Product Name" value="{{ $toEdit->product_name }}" required>
+                    value="{{ $toEdit->product_name }}" required>
             </div>
 
             <div class="mb-3">
                 <label for="price" class="form-label">Price</label>
-                <input type="text" class="form-control" id="price" name="price" placeholder="Enter Price"
+                <input type="text" class="form-control" id="price" name="price"
                     value="{{ $toEdit->price }}" required>
             </div>
 
             <div class="mb-3">
                 <label for="discount_percent" class="form-label">Discount Percent</label>
                 <input type="text" class="form-control" id="discount_percent" name="discount_percent"
-                    placeholder="Enter Discount Percent" value="{{ $toEdit->discount_percent }}" required>
+                    value="{{ $toEdit->discount_percent }}" required>
             </div>
 
             <div class="mb-3">
                 <label for="description" class="form-label">Description</label>
                 <input type="text" class="form-control" id="description" name="description"
-                    placeholder="Enter Description" value="{{ $toEdit->description }}" required>
+                   value="{{ $toEdit->description }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="link" class="form-label">Link</label>
+                <input type="text" class="form-control" id="link" name="link"
+                    value="{{ $toEdit->link }}" required>
             </div>
 
             <!-- Product Attributes -->

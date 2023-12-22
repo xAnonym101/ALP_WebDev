@@ -27,10 +27,11 @@ class ProductController extends Controller
     public function create()
     {
         $categories = DB::table('categories')->get();
+        $events = DB::table('events')->get();
         if ($categories->isEmpty()) {
             return redirect()->route('homepage');
         } else {
-            return view('admin.create_product', compact('categories'));
+            return view('admin.create_product', compact('categories', 'events'));
         }
     }
 
@@ -43,16 +44,44 @@ class ProductController extends Controller
         // dd($request->file('image'));
 
 
-        $product = Product::create([
-            // Product::create([
-            'product_name' => $request->product_name,
-            'description' => $request->description,
-            'price' => $request->price,
-            'category_id' => $request->category_id,
-            'discount_percent' => $request->discount_percent,
-            'best_seller' => '0',
-            'final_price' => $request->price - ($request->price * ($request->discount_percent / 100)),
-        ]);
+        // $product = Product::create([
+        //     // Product::create([
+        //     'product_name' => $request->product_name,
+        //     'description' => $request->description,
+        //     'price' => $request->price,
+        //     'link' =>$request->link,
+        //     'category_id' => $request->category_id,
+        //     'event_id' => $request->category_id,
+        //     'discount_percent' => $request->discount_percent,
+        //     'best_seller' => '0',
+        //     'final_price' => $request->price - ($request->price * ($request->discount_percent / 100)),
+        // ]);
+        if ($request->event_id == 0) {
+            $product = Product::create([
+                // Product::create([
+                'product_name' => $request->product_name,
+                'description' => $request->description,
+                'price' => $request->price,
+                'link' =>$request->link,
+                'category_id' => $request->category_id,
+                'discount_percent' => $request->discount_percent,
+                'best_seller' => '0',
+                'final_price' => $request->price - ($request->price * ($request->discount_percent / 100)),
+            ]);
+        } else {
+            $product = Product::create([
+                // Product::create([
+                'product_name' => $request->product_name,
+                'description' => $request->description,
+                'price' => $request->price,
+                'link' =>$request->link,
+                'category_id' => $request->category_id,
+                'event_id' => $request->event_id,
+                'discount_percent' => $request->discount_percent,
+                'best_seller' => '0',
+                'final_price' => $request->price - ($request->price * ($request->discount_percent / 100)),
+            ]);
+        }
 
         $images = [];
         $imageFile = $request->file('image');
@@ -128,6 +157,7 @@ class ProductController extends Controller
                         'description' => $request->input('description'),
                         'event_id' => null,
                         'price' => $request->input('price'),
+                        'link' =>$request->input('link'),
                         'category_id' => $request->input('category_id'),
                         'discount_percent' => $request->input('discount_percent'),
                         'best_seller' => $request->input('best_seller'),
@@ -139,6 +169,7 @@ class ProductController extends Controller
                         'description' => $request->input('description'),
                         'event_id' => $request->input('event_id'),
                         'price' => $request->input('price'),
+                        'link' =>$request->input('link'),
                         'category_id' => $request->input('category_id'),
                         'discount_percent' => $request->input('discount_percent'),
                         'best_seller' => $request->input('best_seller'),
@@ -150,6 +181,7 @@ class ProductController extends Controller
                     'product_name' => $request->input('product_name'),
                     'description' => $request->input('description'),
                     'price' => $request->input('price'),
+                    'link' =>$request->input('link'),
                     'category_id' => $request->input('category_id'),
                     'discount_percent' => $request->input('discount_percent'),
                     'best_seller' => $request->input('best_seller'),
