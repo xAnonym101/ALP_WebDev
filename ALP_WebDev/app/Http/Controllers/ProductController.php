@@ -190,7 +190,7 @@ class ProductController extends Controller
 
     public function productsList()
     {
-        $products = DB::table('products')->get();
+        $products = DB::table('products')->paginate(5);
         $categories = DB::table('categories')->get();
         $events = DB::table('events')->get();
         $phones = DB::table('phones')->get();
