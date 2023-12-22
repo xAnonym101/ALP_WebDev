@@ -21,12 +21,7 @@ use App\Http\Controllers\VariantController;
 |
 */
 
-Route::get('/home', function () {
-    return view('home',
-    [
-        "pagetitle" => "home"
-    ]);
-});
+Route::get("/home", [ProductController::class, 'home'])->name('home');
 
 Route::get('/about_us', function () {
     return view('about_us',

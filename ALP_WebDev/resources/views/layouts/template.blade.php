@@ -44,6 +44,7 @@
         });
     </script>
 </body>
+
 <footer class="p-5 mt-5" style="background-color: rgb(122, 49, 49);">
     <div class="container">
         <div class="row">
@@ -65,9 +66,13 @@
                 <h5>Follow Us</h5>
                 <p>Stay connected on social media:</p>
                 <ul class="list-inline">
-                    <li class="list-inline-item"><a href="#" class="text-white">Facebook</a></li>
-                    <li class="list-inline-item"><a href="#" class="text-white">Twitter</a></li>
-                    <li class="list-inline-item"><a href="#" class="text-white">Instagram</a></li>
+                    @foreach ($socials as $social)
+                        <li class="list-inline-item">
+                            <a href="{{ \Illuminate\Support\Str::startsWith($social->socialmedia_link, ['http://', 'https://']) ? $social->socialmedia_link : 'https://' . $social->socialmedia_link }}" class="text-white">
+                                <img src="{{ asset('storage/image/' . $social->socialmedia_icon) }}" alt="{{ $social->socialmedia_name }}" style="width: 20px; height: 20px;">
+                            </a>
+                        </li>
+                    @endforeach
                 </ul>
             </div>
         </div>

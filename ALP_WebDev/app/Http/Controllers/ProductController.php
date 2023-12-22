@@ -271,6 +271,27 @@ class ProductController extends Controller
     }
 
 
+    public function home()
+    {
+        $products = DB::table('products')->get();
+        $categories = DB::table('categories')->get();
+        $events = DB::table('events')->get();
+        $phones = DB::table('phones')->get();
+        $socials = DB::table('socials')->get();
+        $images = DB::table('images')->get();
+
+        if ($categories->count() > 0 && $events->count() > 0) {
+            return view('home', compact('products', 'categories', 'events', 'phones', 'socials', 'images'),["pagetitle" => "home"]);
+        } elseif ($categories->count() > 0) {
+            return view('home', compact('products', 'categories', 'phones', 'socials', 'images'),["pagetitle" => "home"]);
+        } elseif ($events->count() > 0) {
+            return view('home', compact('products', 'events', 'phones', 'socials', 'images'),["pagetitle" => "home"]);
+        } else {
+            return view('home', compact('products', 'phones', 'socials', 'images'),["pagetitle" => "home"]);
+        }
+    }
+
+
     public function newarrival()
     {
         $products = DB::table('products')->get();
@@ -338,7 +359,7 @@ class ProductController extends Controller
         $events = DB::table('events')->get();
         $phones = DB::table('phones')->get();
         $socials = DB::table('socials')->get();
-        $images = DB::table('images')->get();
+        $images = DB::table('images')->where("product_id", $product_id)->get();
 
         if ($categories->count() > 0 && $events->count() > 0) {
             return view('products_details', compact('products', 'categories', 'events', 'phones', 'socials', 'images'), ["pagetitle" => "product detail"]);
