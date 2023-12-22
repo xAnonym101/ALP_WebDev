@@ -2,6 +2,7 @@
 
 @section('content1')
     <div class="container mt-5">
+        <h1 class="mb-5">Create Product</h1>
         <form action="{{route('storeProduct')}}" method="POST" enctype="multipart/form-data">
         {{-- <form action="#" method="POST"> --}}
             @csrf
@@ -60,22 +61,30 @@
         dynamicForm.classList.add('mb-3');
         dynamicForm.id = `variant_form_${formCounter}`;
         dynamicForm.innerHTML = `
-            <h3 for="field_${formCounter}">Variant ${formCounter}</h3>
+        <div class="mb-3">
+        <h3 class="variant-title" for="field_${formCounter}">Add Variant ${formCounter}</h3>
 
-            <!-- New form fields -->
-            <label for="variant_name${formCounter}">Variant Name</label>
-            <input type="text" id="variant_name${formCounter}" name="variant_name${formCounter}" required>
+        <!-- New form fields -->
+        <div class="form-group mb-2">
+            <label for="variant_name${formCounter}" class="form-label">Variant Name</label>
+            <input type="text" id="variant_name${formCounter}" name="variant_name${formCounter}" class="form-control" required>
+        </div>
 
-            <label for="color${formCounter}">Color </label>
-            <input type="text" id="color${formCounter}" name="color${formCounter}" required>
+        <div class="form-group mb-2">
+            <label for="color${formCounter}" class="form-label">Color</label>
+            <input type="text" id="color${formCounter}" name="color${formCounter}" class="form-control" required>
+        </div>
 
-            <label for="description${formCounter}">Description </label>
-            <input type="text" id="description${formCounter}" name="description${formCounter}" required>
+        <div class="form-group mb-3">
+            <label for="description${formCounter}" class="form-label">Description</label>
+            <input type="text" id="description${formCounter}" name="description${formCounter}" class="form-control" required>
+        </div>
 
-            <button type="button" onclick="removeDynamicForm(${formCounter})">Remove</button>
-            <!-- You can add more fields as needed -->
+        <button type="button" onclick="removeDynamicForm(${formCounter})" class="btn btn-warning">Remove</button>
+        <!-- You can add more fields as needed -->
 
-            <hr> <!-- Optional: Add a separator between forms -->
+        <hr class="variant-separator"> <!-- Optional: Add a separator between forms -->
+    </div>
         `;
 
         document.getElementById('dynamicFormsContainer').appendChild(dynamicForm);
