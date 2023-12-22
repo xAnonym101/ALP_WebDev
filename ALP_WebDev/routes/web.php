@@ -21,7 +21,7 @@ use App\Http\Controllers\VariantController;
 |
 */
 
-Route::get("/home", [ProductController::class, 'home'])->name('home');
+Route::get("/", [ProductController::class, 'home'])->name('home');
 
 Route::get("/sale", [ProductController::class, 'saleproduct'])->name('sale');
 
@@ -33,7 +33,7 @@ Route::get("/all_products", [ProductController::class, 'allproducts'])->name('al
 
 Route::get("/new_arrival", [ProductController::class, 'newarrival'])->name('newarrival');
 
-Route::get('/', [ProductController::class, 'productsList'])->middleware('auth')->name('homepage');
+Route::get('/admin_page', [ProductController::class, 'productsList'])->middleware('auth')->name('homepage');
 
 Route::get('/createCategory', [CategoryController::class, 'create'])->middleware('auth')->name('createCategory');
 Route::post('/storeCategory', [CategoryController::class, 'store'])->middleware('auth')->name('storeCategory');
