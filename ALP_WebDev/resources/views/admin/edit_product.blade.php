@@ -124,6 +124,14 @@
                     </div>
                 @endforeach
             </div>
+
+            <style>
+                .carousel-control-prev-icon,
+                .carousel-control-next-icon {
+                    background-color: black;
+                }
+            </style>
+
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
@@ -153,7 +161,7 @@
 
 <script>
     let formCounter = {{ $formCounter ?? 0 }};
-    formCounter = formCounter ? formCounter + 1 : 0;
+    formCounter = formCounter ? formCounter : 0;
 
     function addDynamicForm() {
         formCounter++;

@@ -39,12 +39,6 @@
         @endif
     </div>
 
-
-
-
-
-
-
     <table class="table">
         <thead>
             <tr>
@@ -116,24 +110,26 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($categories as $data)
-                        <tr>
-                            <td scope="col">{{ $data->category_id }}</td>
-                            <td scope="col">{{ $data->category_name }}</td>
-                            <td>
-                                <a href={{ route('updateCategory', $data->category_id) }}
-                                    class="btn btn-primary">Update</a>
-                                <form action="{{ route('deleteCategory', $data->category_id) }}" method="POST"
-                                    style="display: inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger"
-                                        onclick="return confirm('Are you sure?')">Delete</button>
-                                </form>
-                            </td>
-                            </td>
-                        </tr>
-                    @endforeach
+                    @if (isset($categories))
+                        @foreach ($categories as $data)
+                            <tr>
+                                <td scope="col">{{ $data->category_id }}</td>
+                                <td scope="col">{{ $data->category_name }}</td>
+                                <td>
+                                    <a href={{ route('updateCategory', $data->category_id) }}
+                                        class="btn btn-primary">Update</a>
+                                    <form action="{{ route('deleteCategory', $data->category_id) }}" method="POST"
+                                        style="display: inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger"
+                                            onclick="return confirm('Are you sure?')">Delete</button>
+                                    </form>
+                                </td>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @endif
                 </tbody>
             </table>
         </div>
@@ -149,31 +145,32 @@
                     </tr>
                 </thead>
                 <tbody>
-
-                    @foreach ($events as $data)
-                        <tr>
-                            <td scope="col">{{ $data->event_id }}</td>
-                            <td scope="col">{{ $data->event_name }}</td>
-                            <td scope="col">
-                                @if ($data->status == '0')
-                                    Suspended/Ended
-                                @else
-                                    Ongoing
-                                @endif
-                            </td>
-                            <td>
-                                <a href={{ route('updateEvent', $data->event_id) }} class="btn btn-primary">Update</a>
-                                <form action="{{ route('deleteEvent', $data->event_id) }}" method="POST"
-                                    style="display: inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger"
-                                        onclick="return confirm('Are you sure?')">Delete</button>
-                                </form>
-                            </td>
-                            </td>
-                        </tr>
-                    @endforeach
+                    @if (isset($events))
+                        @foreach ($events as $data)
+                            <tr>
+                                <td scope="col">{{ $data->event_id }}</td>
+                                <td scope="col">{{ $data->event_name }}</td>
+                                <td scope="col">
+                                    @if ($data->status == '0')
+                                        Suspended/Ended
+                                    @else
+                                        Ongoing
+                                    @endif
+                                </td>
+                                <td>
+                                    <a href={{ route('updateEvent', $data->event_id) }} class="btn btn-primary">Update</a>
+                                    <form action="{{ route('deleteEvent', $data->event_id) }}" method="POST"
+                                        style="display: inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger"
+                                            onclick="return confirm('Are you sure?')">Delete</button>
+                                    </form>
+                                </td>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @endif
                     <table class="table">
                 </tbody>
             </table>
