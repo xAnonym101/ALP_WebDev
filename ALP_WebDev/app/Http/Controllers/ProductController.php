@@ -237,11 +237,10 @@ class ProductController extends Controller
 
     public function productsList(Request $request)
     {
-
         if ($request->has('search')) {
-            $products = DB::table("products")->where('product_name', 'like', '%'.$request->search.'%')->orWhere('product_id', 'like', '%'.$request->search.'%')->paginate(8);
+            $products = DB::table("products")->where('product_name', 'like', '%'.$request->search.'%')->orWhere('product_id', 'like', '%'.$request->search.'%')->paginate(15);
         } else {
-            $products = DB::table("products")->paginate(5);
+            $products = DB::table("products")->paginate(15);
         }
         $categories = DB::table('categories')->paginate(3);
         $events = DB::table('events')->paginate(3);
@@ -250,126 +249,98 @@ class ProductController extends Controller
         return view('admin.admin_page', compact('products', 'categories', 'events', 'phones', 'socials'));
     }
 
-    public function allproducts()
+    public function allproducts(Request $request)
     {
-        $products = DB::table('products')->get();
-        $categories = DB::table('categories')->get();
-        $events = DB::table('events')->get();
-        $phones = DB::table('phones')->get();
-        $socials = DB::table('socials')->get();
-        $images = DB::table('images')->get();
-
-        if ($categories->count() > 0 && $events->count() > 0) {
-            return view('all_products', compact('products', 'categories', 'events', 'phones', 'socials', 'images'), ["pagetitle" => "all products"]);
-        } elseif ($categories->count() > 0) {
-            return view('all_products', compact('products', 'categories', 'phones', 'socials', 'images'), ["pagetitle" => "all products"]);
-        } elseif ($events->count() > 0) {
-            return view('all_products', compact('products', 'events', 'phones', 'socials', 'images'), ["pagetitle" => "all products"]);
+        if ($request->has('search')) {
+            $products = DB::table("products")->where('product_name', 'like', '%'.$request->search.'%')->orWhere('product_id', 'like', '%'.$request->search.'%')->paginate(15);
         } else {
-            return view('all_products', compact('products', 'phones', 'socials', 'images'), ["pagetitle" => "all products"]);
+            $products = DB::table("products")->paginate(15);
         }
+        $categories = DB::table('categories')->paginate(3);
+        $events = DB::table('events')->paginate(3);
+        $phones = DB::table('phones')->paginate(3);
+        $socials = DB::table('socials')->paginate(3);
+        $images = DB::table('images')->get();
+        $pagetitle = 'All Products';
+        return view('home', compact('products', 'categories', 'events', 'phones', 'socials', 'images', 'pagetitle'));
     }
 
 
-    public function home()
+    public function home(Request $request)
     {
-        $products = DB::table('products')->get();
-        $categories = DB::table('categories')->get();
-        $events = DB::table('events')->get();
-        $phones = DB::table('phones')->get();
-        $socials = DB::table('socials')->get();
-        $images = DB::table('images')->get();
-
-        if ($categories->count() > 0 && $events->count() > 0) {
-            return view('home', compact('products', 'categories', 'events', 'phones', 'socials', 'images'),["pagetitle" => "home"]);
-        } elseif ($categories->count() > 0) {
-            return view('home', compact('products', 'categories', 'phones', 'socials', 'images'),["pagetitle" => "home"]);
-        } elseif ($events->count() > 0) {
-            return view('home', compact('products', 'events', 'phones', 'socials', 'images'),["pagetitle" => "home"]);
+        if ($request->has('search')) {
+            $products = DB::table("products")->where('product_name', 'like', '%'.$request->search.'%')->orWhere('product_id', 'like', '%'.$request->search.'%')->paginate(15);
         } else {
-            return view('home', compact('products', 'phones', 'socials', 'images'),["pagetitle" => "home"]);
+            $products = DB::table("products")->paginate(15);
         }
+        $categories = DB::table('categories')->paginate(3);
+        $events = DB::table('events')->paginate(3);
+        $phones = DB::table('phones')->paginate(3);
+        $socials = DB::table('socials')->paginate(3);
+        $images = DB::table('images')->get();
+        $pagetitle = 'Home';
+        return view('home', compact('products', 'categories', 'events', 'phones', 'socials', 'images', 'pagetitle'));
     }
 
 
-    public function newarrival()
+    public function newarrival(Request $request)
     {
-        $products = DB::table('products')->get();
-        $categories = DB::table('categories')->get();
-        $events = DB::table('events')->get();
-        $phones = DB::table('phones')->get();
-        $socials = DB::table('socials')->get();
-        $images = DB::table('images')->get();
-
-        if ($categories->count() > 0 && $events->count() > 0) {
-            return view('new_arrival', compact('products', 'categories', 'events', 'phones', 'socials', 'images'), ["pagetitle" => "new arrivals"]);
-        } elseif ($categories->count() > 0) {
-            return view('new_arrival', compact('products', 'categories', 'phones', 'socials', 'images'), ["pagetitle" => "new arrivals"]);
-        } elseif ($events->count() > 0) {
-            return view('new_arrival', compact('products', 'events', 'phones', 'socials', 'images'), ["pagetitle" => "new arrivals"]);
+        if ($request->has('search')) {
+            $products = DB::table("products")->where('product_name', 'like', '%'.$request->search.'%')->orWhere('product_id', 'like', '%'.$request->search.'%')->paginate(15);
         } else {
-            return view('new_arrival', compact('products', 'phones', 'socials', 'images'), ["pagetitle" => "new arrivals"]);
+            $products = DB::table("products")->paginate(15);
         }
+        $categories = DB::table('categories')->paginate(3);
+        $events = DB::table('events')->paginate(3);
+        $phones = DB::table('phones')->paginate(3);
+        $socials = DB::table('socials')->paginate(3);
+        $images = DB::table('images')->get();
+        $pagetitle = 'New Arrival';
+        return view('home', compact('products', 'categories', 'events', 'phones', 'socials', 'images', 'pagetitle'));
     }
 
-    public function bestseller()
+    public function bestseller(Request $request)
     {
-        $products = DB::table('products')->get();
-        $categories = DB::table('categories')->get();
-        $events = DB::table('events')->get();
-        $phones = DB::table('phones')->get();
-        $socials = DB::table('socials')->get();
-        $images = DB::table('images')->get();
-
-        if ($categories->count() > 0 && $events->count() > 0) {
-            return view('best_seller', compact('products', 'categories', 'events', 'phones', 'socials', 'images'), ["pagetitle" => "best seller"]);
-        } elseif ($categories->count() > 0) {
-            return view('best_seller', compact('products', 'categories', 'phones', 'socials', 'images'), ["pagetitle" => "best seller"]);
-        } elseif ($events->count() > 0) {
-            return view('best_seller', compact('products', 'events', 'phones', 'socials', 'images'), ["pagetitle" => "best seller"]);
+        if ($request->has('search')) {
+            $products = DB::table("products")->where('product_name', 'like', '%'.$request->search.'%')->orWhere('product_id', 'like', '%'.$request->search.'%')->paginate(15);
         } else {
-            return view('best_seller', compact('products', 'phones', 'socials', 'images'), ["pagetitle" => "best seller"]);
+            $products = DB::table("products")->paginate(15);
         }
+        $categories = DB::table('categories')->paginate(3);
+        $events = DB::table('events')->paginate(3);
+        $phones = DB::table('phones')->paginate(3);
+        $socials = DB::table('socials')->paginate(3);
+        $images = DB::table('images')->get();
+        $pagetitle = 'Best Seller';
+        return view('best_seller', compact('products', 'categories', 'events', 'phones', 'socials', 'images', 'pagetitle'));
     }
 
-    public function saleproduct()
+    public function saleproduct(Request $request)
     {
-        $products = DB::table('products')->get();
-        $categories = DB::table('categories')->get();
-        $events = DB::table('events')->get();
-        $phones = DB::table('phones')->get();
-        $socials = DB::table('socials')->get();
-        $images = DB::table('images')->get();
-
-        if ($categories->count() > 0 && $events->count() > 0) {
-            return view('sale', compact('products', 'categories', 'events', 'phones', 'socials', 'images'), ["pagetitle" => "sale"]);
-        } elseif ($categories->count() > 0) {
-            return view('sale', compact('products', 'categories', 'phones', 'socials', 'images'), ["pagetitle" => "sale"]);
-        } elseif ($events->count() > 0) {
-            return view('sale', compact('products', 'events', 'phones', 'socials', 'images'), ["pagetitle" => "sale"]);
+        if ($request->has('search')) {
+            $products = DB::table("products")->where('product_name', 'like', '%'.$request->search.'%')->orWhere('product_id', 'like', '%'.$request->search.'%')->paginate(15);
         } else {
-            return view('sale', compact('products', 'phones', 'socials', 'images'), ["pagetitle" => "sale"]);
+            $products = DB::table("products")->paginate(15);
         }
+        $categories = DB::table('categories')->paginate(3);
+        $events = DB::table('events')->paginate(3);
+        $phones = DB::table('phones')->paginate(3);
+        $socials = DB::table('socials')->paginate(3);
+        $images = DB::table('images')->get();
+        $pagetitle = 'Sale';
+        return view('home', compact('products', 'categories', 'events', 'phones', 'socials', 'images', 'pagetitle'));
     }
 
     public function productdetail($product_id)
     {
-        $products = DB::table("products")->where("product_id", $product_id)->first();
-        $categories = DB::table('categories')->get();
-        $events = DB::table('events')->get();
-        $phones = DB::table('phones')->get();
-        $socials = DB::table('socials')->get();
+        $products = DB::table("products")->where('product_id', $product_id)->first();
+        $categories = DB::table('categories')->paginate(3);
+        $events = DB::table('events')->paginate(3);
+        $phones = DB::table('phones')->paginate(3);
+        $socials = DB::table('socials')->paginate(3);
         $images = DB::table('images')->where("product_id", $product_id)->get();
-
-        if ($categories->count() > 0 && $events->count() > 0) {
-            return view('products_details', compact('products', 'categories', 'events', 'phones', 'socials', 'images'), ["pagetitle" => "product detail"]);
-        } elseif ($categories->count() > 0) {
-            return view('products_details', compact('products', 'categories', 'phones', 'socials', 'images'), ["pagetitle" => "product detail"]);
-        } elseif ($events->count() > 0) {
-            return view('products_details', compact('products', 'events', 'phones', 'socials', 'images'), ["pagetitle" => "product detail"]);
-        } else {
-            return view('products_details', compact('products', 'phones', 'socials', 'images'), ["pagetitle" => "product detail"]);
-        }
+        $pagetitle = 'Products {{$product_id}}';
+        return view('products_details', compact('products', 'categories', 'events', 'phones', 'socials', 'images', 'pagetitle'));
     }
 
 
