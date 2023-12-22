@@ -262,7 +262,7 @@ class ProductController extends Controller
         $socials = DB::table('socials')->paginate(3);
         $images = DB::table('images')->get();
         $pagetitle = 'All Products';
-        return view('home', compact('products', 'categories', 'events', 'phones', 'socials', 'images', 'pagetitle'));
+        return view('all_products', compact('products', 'categories', 'events', 'phones', 'socials', 'images', 'pagetitle'));
     }
 
 
@@ -296,7 +296,7 @@ class ProductController extends Controller
         $socials = DB::table('socials')->paginate(3);
         $images = DB::table('images')->get();
         $pagetitle = 'New Arrival';
-        return view('home', compact('products', 'categories', 'events', 'phones', 'socials', 'images', 'pagetitle'));
+        return view('new_arrival', compact('products', 'categories', 'events', 'phones', 'socials', 'images', 'pagetitle'));
     }
 
     public function bestseller(Request $request)
@@ -328,7 +328,7 @@ class ProductController extends Controller
         $socials = DB::table('socials')->paginate(3);
         $images = DB::table('images')->get();
         $pagetitle = 'Sale';
-        return view('home', compact('products', 'categories', 'events', 'phones', 'socials', 'images', 'pagetitle'));
+        return view('sale', compact('products', 'categories', 'events', 'phones', 'socials', 'images', 'pagetitle'));
     }
 
     public function productdetail($product_id)
