@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('price');
             $table->string('discount_percent')->nullable();
             $table->string('final_price')->nullable();
+            $table->string('link')->nullable();
             $table->timestamps();
 
             $table->unsignedBigInteger('category_id');

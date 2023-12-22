@@ -20,6 +20,7 @@ class Product extends Model
         'final_price',
         'category_id',
         'event_id',
+        'link'
 
     ];
 
