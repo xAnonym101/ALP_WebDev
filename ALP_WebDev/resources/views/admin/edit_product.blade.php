@@ -7,7 +7,6 @@
             @csrf
             @method('PUT')
 
-            <!-- Product Information -->
             <div class="mb-3">
                 <label for="product_name" class="form-label">Product Name</label>
                 <input type="text" class="form-control" id="product_name" name="product_name"
@@ -16,8 +15,8 @@
 
             <div class="mb-3">
                 <label for="price" class="form-label">Price</label>
-                <input type="text" class="form-control" id="price" name="price"
-                    value="{{ $toEdit->price }}" required>
+                <input type="text" class="form-control" id="price" name="price" value="{{ $toEdit->price }}"
+                    required>
             </div>
 
             <div class="mb-3">
@@ -29,15 +28,14 @@
             <div class="mb-3">
                 <label for="description" class="form-label">Description</label>
                 <input type="text" class="form-control" id="description" name="description"
-                   value="{{ $toEdit->description }}" required>
+                    value="{{ $toEdit->description }}" required>
             </div>
             <div class="mb-3">
                 <label for="link" class="form-label">Link</label>
-                <input type="text" class="form-control" id="link" name="link"
-                    value="{{ $toEdit->link }}" required>
+                <input type="text" class="form-control" id="link" name="link" value="{{ $toEdit->link }}"
+                    required>
             </div>
 
-            <!-- Product Attributes -->
             <div class="d-flex gap-5">
                 <div class="mb-3">
                     <label for="category_id" class="form-label">Category</label>
@@ -73,32 +71,30 @@
                 </div>
             </div>
 
-            <!-- Variant Forms -->
             <div>
                 @php $formCounter = 1 @endphp
                 @foreach ($variants as $item)
-                    <!-- Variant Form Fields -->
                     <div class="mb-3">
-                        <h3 class="variant-title" for="field_${formCounter}">Variant {{$formCounter}}</h3>
+                        <h3 class="variant-title" for="field_${formCounter}">Variant {{ $formCounter }}</h3>
 
-                        <!-- New form fields -->
                         <div class="form-group mb-2">
                             <label for="variant_name${formCounter}" class="form-label">Variant Name</label>
-                            <input type="text" id="variant_name${formCounter}" name="variant_name${formCounter}" class="form-control" value="{{$item->variant_name}}" required>
+                            <input type="text" id="variant_name${formCounter}" name="variant_name${formCounter}"
+                                class="form-control" value="{{ $item->variant_name }}" required>
                         </div>
 
                         <div class="form-group mb-2">
                             <label for="color${formCounter}" class="form-label">Color</label>
-                            <input type="text" id="color${formCounter}" name="color${formCounter}" class="form-control" value="{{$item->color}}" required>
+                            <input type="text" id="color${formCounter}" name="color${formCounter}" class="form-control"
+                                value="{{ $item->color }}" required>
                         </div>
 
                         <div class="form-group mb-2">
                             <label for="description${formCounter}" class="form-label">Description</label>
-                            <input type="text" id="description${formCounter}" name="description${formCounter}" class="form-control" value="{{$item->description}}" required>
+                            <input type="text" id="description${formCounter}" name="description${formCounter}"
+                                class="form-control" value="{{ $item->description }}" required>
                         </div>
-                        <!-- You can add more fields as needed -->
                     </div>
-                    <!-- Add variant form fields -->
 
                     <input type="hidden" id="variant_id{{ $loop->iteration }}" name="variant_id{{ $loop->iteration }}"
                         value="{{ $item->variant_id }}">
@@ -112,25 +108,22 @@
                 @endforeach
             </div>
 
-            <!-- Dynamic Variant Forms -->
             <input type="hidden" id="formCounter" name="formCounter" value="0">
             <div id="dynamicFormsContainer"></div>
-            <button type="button" onclick="addDynamicForm()" class="btn btn-success">Add Another Variant</button>
+            <button type="button" id="addFormButton" class="btn btn-success">Add Another Form</button>
             <button onclick="submitForms()" class="btn btn-primary">Submit</button>
         </form>
 
-        <!-- Image Carousel -->
         <div id="carouselExample" class="carousel slide mt-5">
             <div class="carousel-inner">
                 @foreach ($images as $key => $item)
                     <div class="carousel-item {{ $key === 0 ? 'active' : '' }} pb-5">
-                        <img src="{{ asset('storage/images/' . $item->image) }}" class="d-block w-100" alt="Product Image"
-                            style="object-fit: contain; max-height: 60vh;">
+                        <img src="{{ asset('storage/images/' . $item->image) }}" class="d-block w-100"
+                            alt="Product Image" style="object-fit: contain; max-height: 60vh;">
                     </div>
                 @endforeach
             </div>
 
-            <!-- Image Deletion Buttons -->
             @foreach ($images as $item)
                 <form class="position-absolute bottom-20 start-50 translate-middle"
                     action="{{ route('deleteImage', $item->image_id) }}" method="POST">
@@ -141,7 +134,6 @@
                 </form>
             @endforeach
 
-            <!-- Carousel Controls -->
             <style>
                 .carousel-control-prev-icon,
                 .carousel-control-next-icon {
@@ -159,7 +151,6 @@
             </button>
         </div>
 
-        <!-- Add Image Section -->
         <form action="{{ route('saveUpdate', $toEdit->product_id) }}" method="POST" enctype="multipart/form-data"
             class="mt-5">
             @method('put')
@@ -176,51 +167,53 @@
 @endsection
 
 
-
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
     let formCounter = {{ $formCounter ?? 0 }};
-    formCounter = formCounter ? formCounter : 0;
+    formCounter = formCounter ? formCounter - 1 : 0;
+
+    $(document).ready(function() {
+        $('#addFormButton').click(function() {
+            addDynamicForm();
+        });
+    });
 
     function addDynamicForm() {
         formCounter++;
 
-        const dynamicForm = document.createElement('div');
-        dynamicForm.classList.add('mb-3');
-        dynamicForm.id = `variant_form_${formCounter}`;
-        dynamicForm.innerHTML = `
-    <div class="mb-3">
-        <h3 class="variant-title" for="field_${formCounter}">Add Variant ${formCounter}</h3>
+        const dynamicForm = $(`
+            <div class="mb-3" id="variant_form_${formCounter}">
+                <h3 class="variant-title" for="field_${formCounter}">Add Variant ${formCounter}</h3>
 
-        <!-- New form fields -->
-        <div class="form-group mb-2">
-            <label for="variant_name${formCounter}" class="form-label">Variant Name</label>
-            <input type="text" id="variant_name${formCounter}" name="variant_name${formCounter}" class="form-control" required>
-        </div>
+                <!-- New form fields -->
+                <div class="form-group mb-2">
+                    <label for="variant_name${formCounter}" class="form-label">Variant Name</label>
+                    <input type="text" id="variant_name${formCounter}" name="variant_name${formCounter}" class="form-control" required>
+                </div>
 
-        <div class="form-group mb-2">
-            <label for="color${formCounter}" class="form-label">Color</label>
-            <input type="text" id="color${formCounter}" name="color${formCounter}" class="form-control" required>
-        </div>
+                <div class="form-group mb-2">
+                    <label for="color${formCounter}" class="form-label">Color</label>
+                    <input type="text" id="color${formCounter}" name="color${formCounter}" class="form-control" required>
+                </div>
 
-        <div class="form-group mb-3">
-            <label for="description${formCounter}" class="form-label">Description</label>
-            <input type="text" id="description${formCounter}" name="description${formCounter}" class="form-control" required>
-        </div>
+                <div class="form-group mb-3">
+                    <label for="description${formCounter}" class="form-label">Description</label>
+                    <input type="text" id="description${formCounter}" name="description${formCounter}" class="form-control" required>
+                </div>
 
-        <button type="button" onclick="removeDynamicForm(${formCounter})" class="btn btn-warning">Remove</button>
-        <!-- You can add more fields as needed -->
+                <button type="button" class="btn btn-warning" onclick="removeDynamicForm(${formCounter})">Remove</button>
+                <!-- You can add more fields as needed -->
 
-        <hr class="variant-separator"> <!-- Optional: Add a separator between forms -->
-    </div>
-`;
+                <hr class="variant-separator"> <!-- Optional: Add a separator between forms -->
+            </div>
+        `);
 
-        document.getElementById('dynamicFormsContainer').appendChild(dynamicForm);
-        document.getElementById('formCounter').value = formCounter;
+        $('#dynamicFormsContainer').append(dynamicForm);
+        $('#formCounter').val(formCounter);
     }
 
     function removeDynamicForm(formNumber) {
-        const dynamicForm = document.getElementById(`variant_form_${formNumber}`);
-        dynamicForm.remove();
+        $(`#variant_form_${formNumber}`).remove();
     }
 
     function previewImage() {
@@ -238,8 +231,6 @@
     }
 
     function submitForms() {
-        // document.getElementById('productForm').submit();
-
         const formCount = {{ $formCounter }};
         for (let i = 1; i <= formCount; i++) {
             document.getElementById(`variantForm${i}`).submit();
