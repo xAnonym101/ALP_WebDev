@@ -45,7 +45,7 @@
     </script>
 </body>
 
-<footer class="p-5 mt-5" style="background-color: rgb(122, 49, 49);">
+<footer class="p-5 mt-5 text-white" style="background-color: rgb(122, 49, 49);">
     <div class="container">
         <div class="row">
             <div class="col-md-4">
