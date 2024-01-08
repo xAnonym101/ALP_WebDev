@@ -108,7 +108,7 @@
 
 
 @section('layout_content2')
-@if ($products->discount_percent >= 30)
+@if ($data->discount_percent >= 30)
 <div class="container text-center mb-4">
     <hr class="my-1">
     <h2 class="mb-1">sale</h2>
@@ -116,6 +116,7 @@
 </div>
 <div class="row flex-nowrap">
     @foreach ($products as $data)
+    @if ($data->discount_percent >= 30)
         <div class="col-md-4 mb-4">
             <a href="{{ route('products_details', ['id' => $data->product_id]) }}" class="card-link">
                 <div class="card h-100">
@@ -147,6 +148,7 @@
             </div>
         </a>
     </div>
+    @endif
 @endforeach
 </div>
 <div class="centered-button-container">
