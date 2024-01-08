@@ -49,7 +49,7 @@
 
 @section('layout_content1')
 @foreach ($events as $event)
-    @if ($event->status != '0')
+    @if ($event->status !== '0')
         <div class="red-background-container">
             <div class="container text-center mb-4">
                 <hr class="my-1">
