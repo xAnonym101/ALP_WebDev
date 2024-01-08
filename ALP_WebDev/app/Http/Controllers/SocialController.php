@@ -85,15 +85,22 @@ class SocialController extends Controller
     {
         // dd($request->file('socialmedia_icon'));
         // dd($request->all());
-        $imageFile = $request->file('socialmedia_icon');
-        $hashedFilename = $imageFile->hashName();
-        $imageFile->storeAs('images', $hashedFilename, 'public');
+        if ($request->file('socialmedia_icon') != null) {
+            $imageFile = $request->file('socialmedia_icon');
+            $hashedFilename = $imageFile->hashName();
+            $imageFile->storeAs('images', $hashedFilename, 'public');
 
-        DB::table('socials')->where('social_id', $id)->update([
-            'socialmedia_name' => $request->socialmedia_name,
-            'socialmedia_link' => $request->socialmedia_link,
-            'socialmedia_icon' => $hashedFilename,
-        ]);
+            DB::table('socials')->where('social_id', $id)->update([
+                'socialmedia_name' => $request->socialmedia_name,
+                'socialmedia_link' => $request->socialmedia_link,
+                'socialmedia_icon' => $hashedFilename,
+            ]);
+        } else {
+            DB::table('socials')->where('social_id', $id)->update([
+                'socialmedia_name' => $request->socialmedia_name,
+                'socialmedia_link' => $request->socialmedia_link,
+            ]);
+        }
 
         return redirect()->route('homepage');
     }

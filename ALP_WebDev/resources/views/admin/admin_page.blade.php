@@ -76,7 +76,7 @@
                 <table class="table">
                     <thead>
                         <tr style="height: 50px;">
-                            <th scope="col">ID</th>
+                            <th scope="col">No.</th>
                             <th scope="col">Product Name</th>
                             <th scope="col">Best Seller</th>
                             <th scope="col">Has Event</th>
@@ -88,9 +88,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($products as $data)
+                        @foreach ($products as $index => $data)
                             <tr style="height: 50px;">
-                                <td>{{ $data->product_id }}</td>
+                                <td>{{ $index + 1 }}</td>
                                 <td>{{ $data->product_name }}</td>
                                 <td>
                                     @if ($data->best_seller == '0')
@@ -173,16 +173,16 @@
                 <table class="table">
                     <thead>
                         <tr style="height: 50px;">
-                            <th scope="col">ID</th>
+                            <th scope="col">No.</th>
                             <th scope="col">Category Name</th>
                             <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
                         @if (isset($categories))
-                            @foreach ($categories as $data)
+                            @foreach ($categories as $index => $data)
                                 <tr style="height: 50px;">
-                                    <td scope="col">{{ $data->category_id }}</td>
+                                    <td scope="col">{{ $index + 1 }}</td>
                                     <td scope="col">{{ $data->category_name }}</td>
                                     <td>
                                         <a href={{ route('updateCategory', $data->category_id) }}
@@ -228,7 +228,7 @@
                 <table class="table">
                     <thead>
                         <tr style="height: 50px;">
-                            <th scope="col">ID</th>
+                            <th scope="col">No.</th>
                             <th scope="col">Event Name</th>
                             <th scope="col">Status</th>
                             <th scope="col"></th>
@@ -236,15 +236,22 @@
                     </thead>
                     <tbody>
                         @if (isset($events))
-                            @foreach ($events as $data)
+                            @foreach ($events as $index => $data)
                                 <tr style="height: 50px;">
-                                    <td scope="col">{{ $data->event_id }}</td>
+                                    <td scope="col">{{ $index + 1 }}</td>
                                     <td scope="col">{{ $data->event_name }}</td>
                                     <td scope="col">
                                         @if ($data->status == '0')
                                             Suspended/Ended
                                         @else
                                             Ongoing
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($data->status == '0')
+                                        <a href={{ route('enableDisable', $data->event_id) }} class="btn btn-primary">Enable</a>
+                                        @else
+                                        <a href={{ route('enableDisable', $data->event_id) }} class="btn btn-primary">Disable</a>
                                         @endif
                                     </td>
                                     <td>
@@ -267,11 +274,13 @@
                                         <td>&nbsp;</td>
                                         <td>&nbsp;</td>
                                         <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
                                     </tr>
                                 @endfor
                             @elseif (count($events) == 0)
                                 @for ($i = 0; $i < 3; $i++)
                                     <tr style="height: 50px;">
+                                        <td>&nbsp;</td>
                                         <td>&nbsp;</td>
                                         <td>&nbsp;</td>
                                         <td>&nbsp;</td>
@@ -297,16 +306,17 @@
                 <table class="table">
                     <thead>
                         <tr style="height: 50px;">
-                            <th scope="col">ID</th>
+                            <th scope="col">No.</th>
                             <th scope="col">Phone Number</th>
+                            <th scope="col"></th>
                             <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
                         @if (!empty($phones))
-                            @foreach ($phones as $data)
+                            @foreach ($phones as $index => $data)
                                 <tr style="height: 50px;">
-                                    <td scope="col">{{ $data->phone_id }}</td>
+                                    <td scope="col">{{ $index + 1 }}</td>
                                     <td scope="col">{{ $data->phone_number }}</td>
                                     <td>
                                         <a href={{ route('updatePhone', $data->phone_id) }} class="btn btn-primary">Update</a>
@@ -351,22 +361,25 @@
                 <table class="table">
                     <thead>
                         <tr style="height: 50px;">
-                            <th scope="col">ID</th>
-                            <th scope="col">Social Media Name</th>
+                            <th scope="col">No.</th>
+                            <th scope="col">Name</th>
                             <th scope="col">Social Media Link</th>
+                            <th scope="col"></th>
                             <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
                         @if (!empty($socials))
-                            @foreach ($socials as $data)
+                            @foreach ($socials as $index => $data)
                                 <tr style="height: 50px;">
-                                    <td scope="col">{{ $data->social_id }}</td>
+                                    <td scope="col">{{ $index + 1 }}</td>
                                     <td scope="col">{{ $data->socialmedia_name }}</td>
                                     <td scope="col">{{ $data->socialmedia_link }}</td>
                                     <td>
                                         <a href={{ route('updateSocial', $data->social_id) }}
                                             class="btn btn-primary">Update</a>
+                                    </td>
+                                    <td>
                                         <form action="{{ route('deleteSocial', $data->social_id) }}" method="POST"
                                             style="display: inline;">
                                             @csrf
@@ -384,11 +397,15 @@
                                         <td>&nbsp;</td>
                                         <td>&nbsp;</td>
                                         <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
                                     </tr>
                                 @endfor
                             @elseif (count($socials) == 0)
                                 @for ($i = 0; $i < 3; $i++)
                                     <tr style="height: 50px;">
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
                                         <td>&nbsp;</td>
                                         <td>&nbsp;</td>
                                         <td>&nbsp;</td>
