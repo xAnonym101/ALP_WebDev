@@ -11,6 +11,8 @@ use Illuminate\Http\Client\Request as ClientRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use function PHPUnit\Framework\isEmpty;
+
 class ProductController extends Controller
 {
     /**
@@ -237,6 +239,27 @@ class ProductController extends Controller
 
     public function productsList(Request $request)
     {
+        //EVENT STATUS ENABLE/DISABLE
+        $events = DB::table('events')->get();
+        // dd($events);
+
+        foreach($events as $data) {
+            // dd($data->event_id);
+            $products = DB::table('products')->where('event_id', $data->event_id)->get();
+            // dd($products);
+            if (!isEmpty($products)) {
+                DB::table('events')->where('event_id', $data->event_id)->update([
+                    'status' => "1",
+                ]);
+                dd("activated");
+            } else {
+                DB::table('events')->where('event_id', $data->event_id)->update([
+                    'status' => "0",
+                ]);
+            }
+        }
+        //EVENT STATUS ENABLE/DISABLE
+
         if ($request->has('search')) {
             $products = DB::table("products")->where('product_name', 'like', '%'.$request->search.'%')->orWhere('product_id', 'like', '%'.$request->search.'%')->paginate(15);
         } else {
