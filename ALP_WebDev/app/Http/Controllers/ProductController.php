@@ -64,7 +64,7 @@ class ProductController extends Controller
                 'product_name' => $request->product_name,
                 'description' => $request->description,
                 'price' => $request->price,
-                'link' =>$request->link,
+                'link' => $request->link,
                 'category_id' => $request->category_id,
                 'discount_percent' => $request->discount_percent,
                 'best_seller' => '0',
@@ -76,7 +76,7 @@ class ProductController extends Controller
                 'product_name' => $request->product_name,
                 'description' => $request->description,
                 'price' => $request->price,
-                'link' =>$request->link,
+                'link' => $request->link,
                 'category_id' => $request->category_id,
                 'event_id' => $request->event_id,
                 'discount_percent' => $request->discount_percent,
@@ -159,7 +159,7 @@ class ProductController extends Controller
                         'description' => $request->input('description'),
                         'event_id' => null,
                         'price' => $request->input('price'),
-                        'link' =>$request->input('link'),
+                        'link' => $request->input('link'),
                         'category_id' => $request->input('category_id'),
                         'discount_percent' => $request->input('discount_percent'),
                         'best_seller' => $request->input('best_seller'),
@@ -171,7 +171,7 @@ class ProductController extends Controller
                         'description' => $request->input('description'),
                         'event_id' => $request->input('event_id'),
                         'price' => $request->input('price'),
-                        'link' =>$request->input('link'),
+                        'link' => $request->input('link'),
                         'category_id' => $request->input('category_id'),
                         'discount_percent' => $request->input('discount_percent'),
                         'best_seller' => $request->input('best_seller'),
@@ -183,7 +183,7 @@ class ProductController extends Controller
                     'product_name' => $request->input('product_name'),
                     'description' => $request->input('description'),
                     'price' => $request->input('price'),
-                    'link' =>$request->input('link'),
+                    'link' => $request->input('link'),
                     'category_id' => $request->input('category_id'),
                     'discount_percent' => $request->input('discount_percent'),
                     'best_seller' => $request->input('best_seller'),
@@ -241,17 +241,12 @@ class ProductController extends Controller
     {
         //EVENT STATUS ENABLE/DISABLE
         $events = DB::table('events')->get();
-        // dd($events);
-
-        foreach($events as $data) {
-            // dd($data->event_id);
+        foreach ($events as $data) {
             $products = DB::table('products')->where('event_id', $data->event_id)->get();
-            // dd($products);
-            if (!isEmpty($products)) {
+            if (count($products) > 0) {
                 DB::table('events')->where('event_id', $data->event_id)->update([
                     'status' => "1",
                 ]);
-                dd("activated");
             } else {
                 DB::table('events')->where('event_id', $data->event_id)->update([
                     'status' => "0",
@@ -261,7 +256,7 @@ class ProductController extends Controller
         //EVENT STATUS ENABLE/DISABLE
 
         if ($request->has('search')) {
-            $products = DB::table("products")->where('product_name', 'like', '%'.$request->search.'%')->orWhere('product_id', 'like', '%'.$request->search.'%')->paginate(15);
+            $products = DB::table("products")->where('product_name', 'like', '%' . $request->search . '%')->orWhere('product_id', 'like', '%' . $request->search . '%')->paginate(15);
         } else {
             $products = DB::table("products")->paginate(15);
         }
@@ -275,7 +270,7 @@ class ProductController extends Controller
     public function allproducts(Request $request)
     {
         if ($request->has('search')) {
-            $products = DB::table("products")->where('product_name', 'like', '%'.$request->search.'%')->orWhere('product_id', 'like', '%'.$request->search.'%')->paginate(15);
+            $products = DB::table("products")->where('product_name', 'like', '%' . $request->search . '%')->orWhere('product_id', 'like', '%' . $request->search . '%')->paginate(15);
         } else {
             $products = DB::table("products")->paginate(15);
         }
@@ -291,11 +286,7 @@ class ProductController extends Controller
 
     public function home(Request $request)
     {
-        if ($request->has('search')) {
-            $products = DB::table("products")->where('product_name', 'like', '%'.$request->search.'%')->orWhere('product_id', 'like', '%'.$request->search.'%')->paginate(15);
-        } else {
-            $products = DB::table("products")->paginate(15);
-        }
+        $products = DB::table("products")->where('product_name', 'like', '%' . $request->search . '%')->orWhere('product_id', 'like', '%' . $request->search . '%')->paginate(3);
         $categories = DB::table('categories')->paginate(3);
         $events = DB::table('events')->paginate(3);
         $phones = DB::table('phones')->paginate(3);
@@ -309,7 +300,7 @@ class ProductController extends Controller
     public function newarrival(Request $request)
     {
         if ($request->has('search')) {
-            $products = DB::table("products")->where('product_name', 'like', '%'.$request->search.'%')->orWhere('product_id', 'like', '%'.$request->search.'%')->paginate(15);
+            $products = DB::table("products")->where('product_name', 'like', '%' . $request->search . '%')->orWhere('product_id', 'like', '%' . $request->search . '%')->paginate(15);
         } else {
             $products = DB::table("products")->paginate(15);
         }
@@ -325,7 +316,7 @@ class ProductController extends Controller
     public function bestseller(Request $request)
     {
         if ($request->has('search')) {
-            $products = DB::table("products")->where('product_name', 'like', '%'.$request->search.'%')->orWhere('product_id', 'like', '%'.$request->search.'%')->paginate(15);
+            $products = DB::table("products")->where('product_name', 'like', '%' . $request->search . '%')->orWhere('product_id', 'like', '%' . $request->search . '%')->paginate(15);
         } else {
             $products = DB::table("products")->paginate(15);
         }
@@ -341,7 +332,7 @@ class ProductController extends Controller
     public function saleproduct(Request $request)
     {
         if ($request->has('search')) {
-            $products = DB::table("products")->where('product_name', 'like', '%'.$request->search.'%')->orWhere('product_id', 'like', '%'.$request->search.'%')->paginate(15);
+            $products = DB::table("products")->where('product_name', 'like', '%' . $request->search . '%')->orWhere('product_id', 'like', '%' . $request->search . '%')->paginate(15);
         } else {
             $products = DB::table("products")->paginate(15);
         }

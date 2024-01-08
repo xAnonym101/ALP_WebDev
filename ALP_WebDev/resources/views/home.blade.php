@@ -51,7 +51,7 @@
 
 @section('layout_content1')
     @foreach ($events as $event)
-        @if ($events !== null)
+        @if ($event->status != "0")
             <div class="container text-center mb-4">
                 <hr class="my-1">
                 <h2 class="mb-1">{{ $event->event_name }}</h2>
