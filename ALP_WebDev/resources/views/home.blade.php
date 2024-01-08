@@ -108,7 +108,7 @@
 
 
 @section('layout_content2')
-@if ($data->discount_percent >= 30)
+@if ($products->discount_percent >= 30)
 <div class="container text-center mb-4">
     <hr class="my-1">
     <h2 class="mb-1">sale</h2>
