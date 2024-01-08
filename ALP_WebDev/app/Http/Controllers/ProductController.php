@@ -286,6 +286,23 @@ class ProductController extends Controller
 
     public function home(Request $request)
     {
+
+        //EVENT STATUS ENABLE/DISABLE
+        $events = DB::table('events')->get();
+        foreach ($events as $data) {
+            $products = DB::table('products')->where('event_id', $data->event_id)->get();
+            if (count($products) > 0) {
+                DB::table('events')->where('event_id', $data->event_id)->update([
+                    'status' => "1",
+                ]);
+            } else {
+                DB::table('events')->where('event_id', $data->event_id)->update([
+                    'status' => "0",
+                ]);
+            }
+        }
+        //EVENT STATUS ENABLE/DISABLE
+
         $products = DB::table("products")->where('product_name', 'like', '%' . $request->search . '%')->orWhere('product_id', 'like', '%' . $request->search . '%')->paginate(3);
         $categories = DB::table('categories')->paginate(3);
         $events = DB::table('events')->paginate(3);

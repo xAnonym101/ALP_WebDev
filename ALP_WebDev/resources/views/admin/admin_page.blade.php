@@ -79,6 +79,7 @@
                             <th scope="col">No.</th>
                             <th scope="col">Product Name</th>
                             <th scope="col">Best Seller</th>
+                            <th scope="col">Event</th>
                             <th scope="col">Has Event</th>
                             <th scope="col">Price</th>
                             <th scope="col">Discount</th>
@@ -248,13 +249,6 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if ($data->status == '0')
-                                        <a href={{ route('enableDisable', $data->event_id) }} class="btn btn-primary">Enable</a>
-                                        @else
-                                        <a href={{ route('enableDisable', $data->event_id) }} class="btn btn-primary">Disable</a>
-                                        @endif
-                                    </td>
-                                    <td>
                                         <a href={{ route('updateEvent', $data->event_id) }} class="btn btn-primary">Update</a>
                                         <form action="{{ route('deleteEvent', $data->event_id) }}" method="POST"
                                             style="display: inline;">
@@ -274,13 +268,11 @@
                                         <td>&nbsp;</td>
                                         <td>&nbsp;</td>
                                         <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
                                     </tr>
                                 @endfor
                             @elseif (count($events) == 0)
                                 @for ($i = 0; $i < 3; $i++)
                                     <tr style="height: 50px;">
-                                        <td>&nbsp;</td>
                                         <td>&nbsp;</td>
                                         <td>&nbsp;</td>
                                         <td>&nbsp;</td>
