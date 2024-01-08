@@ -45,3 +45,8 @@
         border: 1px solid #000000;
         border-radius: 5px;
     }
+
+    .red-background-container {
+        background-color: rgb(122, 49, 49);
+        padding: 10px; /* Adjust the padding as needed */
+    }
