@@ -31,6 +31,7 @@
     @include('layouts.navigation')
 
     <div class="container-fluid">
+        @yield("layout_content0")
         @yield('layout_content1')
         @yield('layout_content2')
     </div>

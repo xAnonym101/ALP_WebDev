@@ -25,6 +25,8 @@ Route::get("/", [ProductController::class, 'home'])->name('home');
 
 Route::get("/sale", [ProductController::class, 'saleproduct'])->name('sale');
 
+Route::get("/event/{id}", [ProductController::class, 'eventallproduct'])->name('event');
+
 Route::get("/best_seller", [ProductController::class, 'bestseller'])->name('bestseller');
 
 Route::get("/products_details/{id}", [ProductController::class, 'productdetail'])->name('products_details');

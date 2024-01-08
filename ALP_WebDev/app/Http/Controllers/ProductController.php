@@ -331,6 +331,18 @@ class ProductController extends Controller
         return view('sale', compact('products', 'categories', 'events', 'phones', 'socials', 'images', 'pagetitle'));
     }
 
+    public function eventallproduct($event_id)
+    {
+        $products = DB::table("products")->where('event_id', $event_id)->get();
+        $categories = DB::table('categories')->paginate(3);
+        $events = DB::table('events')->paginate(3)->where('event_id', $event_id)->first();
+        $phones = DB::table('phones')->paginate(3);
+        $socials = DB::table('socials')->paginate(3);
+        $images = DB::table('images')->get();
+        $pagetitle = 'Sale';
+        return view('event', compact('products', 'categories', 'events', 'phones', 'socials', 'images', 'pagetitle'));
+    }
+
     public function productdetail($product_id)
     {
         $products = DB::table("products")->where('product_id', $product_id)->first();
