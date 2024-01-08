@@ -26,12 +26,17 @@
                             <h5 class="card-title">{{ $data->product_name }}</h5>
                             <p class="card-text">
                                 {{ $data->description }}<br>
-                                @php
-                                    $discountedPrice = $data->price - $data->price * ($data->discount_percent / 100);
-                                @endphp
-                                <del>Rp{{ number_format($data->price, 2) }}</del>
-                                Rp{{ number_format($discountedPrice, 2) }}
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $data->discount_percent }}% off
+
+                                @if ($data->discount_percent > 0)
+                                    @php
+                                        $discountedPrice = $data->price - $data->price * ($data->discount_percent / 100);
+                                    @endphp
+                                    <del>Rp{{ number_format($data->price, 2) }}</del>
+                                    Rp{{ number_format($discountedPrice, 2) }}
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $data->discount_percent }}% off
+                                @else
+                                    Rp{{ number_format($data->price, 2) }}
+                                @endif
                             </p>
                         </div>
                     </div>
