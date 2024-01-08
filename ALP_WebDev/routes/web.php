@@ -48,6 +48,7 @@ Route::post('/storeEvent', [EventController::class, 'store'])->middleware('auth'
 Route::get('/updateEvent/{id}', [EventController::class, 'edit'])->middleware('auth')->name('updateEvent');
 Route::put('/saveEvent/{id}', [EventController::class, 'update'])->middleware('auth')->name('saveEvent');
 Route::delete('/deleteEvent/{id}', [EventController::class, 'destroy'])->middleware('auth')->name('deleteEvent');
+Route::get('/enableDisable/{id}', [EventController::class, 'enableDisable'])->middleware('auth')->name('enableDisable');
 
 Route::get('/createPhone', [PhoneController::class, 'create'])->middleware('auth')->name('createPhone');
 Route::post('/storePhone', [PhoneController::class, 'store'])->middleware('auth')->name('storePhone');

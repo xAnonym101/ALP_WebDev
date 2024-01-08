@@ -80,6 +80,21 @@ class EventController extends Controller
         return redirect()->route('homepage');
     }
 
+    public function enableDisable($id) {
+        $event = DB::table('events')->where('event_id', $id)->first();
+
+        if ($event) {
+            $newStatus = $event->status == "0" ? "1" : "0";
+
+            DB::table('events')->where('event_id', $id)->update([
+                'status' => $newStatus,
+            ]);
+        }
+        return redirect()->route('homepage');
+    }
+
+
+
     /**
      * Remove the specified resource from storage.
      */
@@ -87,5 +102,22 @@ class EventController extends Controller
     {
         DB::table('events')->where('event_id', $id)->delete();
         return redirect()->route('homepage');
+    }
+
+    public function eventChecker() {
+        $events = DB::table('events')->get();
+
+        foreach($events as $data) {
+            $products = DB::table('products')->where('product_id', $data->event_id)->first();
+            if ($products) {
+                DB::table('events')->where('event_id', $data->event_id)->update([
+                    'status' => "1",
+                ]);
+            } else {
+                DB::table('events')->where('event_id', $data->event_id)->update([
+                    'status' => "0",
+                ]);
+            }
+        }
     }
 }
