@@ -115,6 +115,7 @@
     <h2 class="mb-1">sale</h2>
     <hr class="my-1">
 </div>
+@endif
 @endforeach
 <div class="row flex-nowrap">
     @foreach ($products as $data)
@@ -157,5 +158,4 @@
 <div class="centered-button-container">
 <a href="{{ route('sale') }}" class="centered-button text-white">View all</a>
 </div>
-@endif
 @endsection
